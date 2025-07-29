@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="520.0" maxWidth="800.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.physicalmed.physicalmedmanagement.LoginController">
+   <children>
+      <Pane prefHeight="520.0" prefWidth="318.0" style="-fx-background-color: #FFFFFF;">
+         <children>
+            <ImageView fitHeight="304.0" fitWidth="318.0" layoutX="7.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/Physical_Med.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane layoutX="316.0" prefHeight="520.0" prefWidth="486.0">
+         <children>
+            <ImageView fitHeight="526.0" fitWidth="486.0" layoutX="1.0" layoutY="-4.0" pickOnBounds="true">
+               <image>
+                  <Image url="@images/Fundo_Gradiente.png" />
+               </image>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </ImageView>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="24.0" layoutY="55.0" prefHeight="40.0" prefWidth="440.0" text="Sistema De Gerenciamento Physical Med" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI Bold" size="22.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="172.0" layoutY="123.0" prefHeight="40.0" prefWidth="72.0" text="Login" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI Bold" size="22.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Label>
+            <ImageView fitHeight="70.0" fitWidth="62.0" layoutX="244.0" layoutY="112.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/cadeado-login.png" />
+               </image>
+            </ImageView>
+            <Label contentDisplay="CENTER" layoutX="56.0" layoutY="240.0" prefHeight="40.0" prefWidth="98.0" text="Usuario:" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI Bold" size="22.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Label>
+            <Label contentDisplay="CENTER" layoutX="56.0" layoutY="312.0" prefHeight="40.0" prefWidth="98.0" text="Senha:" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI Bold" size="22.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Label>
+            <TextField fx:id="txtUser" layoutX="167.0" layoutY="240.0" prefHeight="40.0" prefWidth="278.0" promptText="Digite o usuario....." style="-fx-background-radius: 8;">
+               <font>
+                  <Font name="Segoe UI" size="16.0" />
+               </font>
+               <effect>
+                  <InnerShadow>
+                     <color>
+                        <Color red="0.5137255191802979" green="0.5137255191802979" blue="0.5137255191802979" />
+                     </color>
+                  </InnerShadow>
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+            </TextField>
+            <TextField fx:id="txtPassword" layoutX="167.0" layoutY="312.0" prefHeight="40.0" prefWidth="278.0" promptText="Digite a senha....." style="-fx-background-radius: 8;">
+               <font>
+                  <Font name="Segoe UI" size="16.0" />
+               </font>
+               <effect>
+                  <InnerShadow>
+                     <color>
+                        <Color red="0.5137255191802979" green="0.5137255191802979" blue="0.5137255191802979" />
+                     </color>
+                  </InnerShadow>
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+            </TextField>
+            <Button fx:id="buttonLogin" layoutX="140.0" layoutY="433.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="40.0" prefWidth="208.0" style="-fx-background-color: #34EB2E; -fx-background-radius: 8;" text="Entrar">
+               <font>
+                  <Font name="Segoe UI Bold" size="20.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
