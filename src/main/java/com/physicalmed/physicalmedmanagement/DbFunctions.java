@@ -6,40 +6,49 @@ import java.sql.*;
 
 public class DbFunctions {
 
-    //teste
+    private static final String DB_URL = "jdbc:postgresql://localhost:5432/physical_med_DB";
+    private static final String USER = "postgres";
+    private static final String PASSWORD = "8870";
 
-    public Connection connect_to_db(String dbname, String user, String password){
-        Connection conn = null;
-        try {
-            Class.forName("org.postgresql.Driver");
-            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/"+dbname, user, password);
-            if (conn!=null){
-                System.out.println("Conexão estabelecida com sucesso!");
-            }
-            else {
-                System.out.println("Erro na conexão!");
-            }
-        }
-        catch (Exception e){
-            System.out.println(e);
-        }
-        return conn;
+    public Connection getConnection() throws SQLException{
+        return DriverManager.getConnection(DB_URL, USER, PASSWORD);
     }
 
     public boolean validateLogin(String username, String password){
-        String querry = "SELECT * FROM users WHERE username = ? AND password = ?";
+        System.out.println("Validando Login, username: " + username + " Password: " + password);
+        String query = "SELECT * FROM users WHERE username = ? AND password = ?";
 
-        try (Connection conn = connect_to_db("physical_med_DB", "postgres", "8870");
-        PreparedStatement pstmt = conn.prepareStatement(querry)){
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query)){
 
             pstmt.setString(1, username);
             pstmt.setString(2, password);
 
-            ResultSet rs = pstmt.executeQuery();
-            return rs.next();
+            try (ResultSet rs = pstmt.executeQuery()){
+                return rs.next();
+            }
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public void getUserData(String username){
+        String query = "SELECT username, role FROM users WHERE username = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)){
+
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()){
+                UserSession.getInstance().setUser(rs.getString("username"), rs.getString("role"));
+                System.out.println("Sessão iniciada para: " + username);
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
         }
     }
 
