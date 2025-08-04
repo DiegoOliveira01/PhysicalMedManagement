@@ -14,14 +14,14 @@ public class DbFunctions {
         return DriverManager.getConnection(DB_URL, USER, PASSWORD);
     }
 
-    public boolean validateLogin(String username, String password){
-        System.out.println("Validando Login, username: " + username + " Password: " + password);
-        String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+    public boolean validateLogin(String login, String password){
+        System.out.println("Validando Login, login: " + login + " Password: " + password);
+        String query = "SELECT * FROM users WHERE login = ? AND password = ?";
 
         try (Connection conn = getConnection();
             PreparedStatement pstmt = conn.prepareStatement(query)){
 
-            pstmt.setString(1, username);
+            pstmt.setString(1, login);
             pstmt.setString(2, password);
 
             try (ResultSet rs = pstmt.executeQuery()){
@@ -34,17 +34,17 @@ public class DbFunctions {
         }
     }
 
-    public void getUserData(String username){
-        String query = "SELECT username, role FROM users WHERE username = ?";
+    public void getUserData(String login){
+        String query = "SELECT login, username, role FROM users WHERE login = ?";
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)){
 
-            pstmt.setString(1, username);
+            pstmt.setString(1, login);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()){
-                UserSession.getInstance().setUser(rs.getString("username"), rs.getString("role"));
-                System.out.println("Sessão iniciada para: " + username);
+                UserSession.getInstance().setUser(rs.getString("login"), rs.getString("username"), rs.getString("role"));
+                System.out.println("Sessão iniciada para: " + login);
             }
 
         }catch (SQLException e){

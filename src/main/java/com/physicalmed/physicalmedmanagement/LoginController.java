@@ -23,7 +23,7 @@ public class LoginController implements Initializable {
     @FXML
     private Button buttonLogin;
 
-    private DbFunctions dbFunctions = new DbFunctions();
+    private final DbFunctions dbFunctions = new DbFunctions();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -43,16 +43,16 @@ public class LoginController implements Initializable {
             buttonLogin.setScaleY(1);
         });
 
-        String username = txtUser.getText();
+        String login = txtUser.getText();
         String password = txtPassword.getText();
 
-        if (username.isEmpty() && password.isEmpty()){
+        if (login.isEmpty() && password.isEmpty()){
             showAlert("Dados Não Preenchidos!", "Por favor, preencha todos os campos antes de continuar");
             return;
         }
 
-        if (dbFunctions.validateLogin(username, password)){
-            dbFunctions.getUserData(username);
+        if (dbFunctions.validateLogin(login, password)){
+            dbFunctions.getUserData(login);
             Stage currentStage = (Stage) txtUser.getScene().getWindow();
             ScreenManager.changeScreen("/com/physicalmed/physicalmedmanagement/admin-screen-view.fxml","Tela Principal", currentStage);
         }

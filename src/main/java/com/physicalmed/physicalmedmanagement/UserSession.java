@@ -3,6 +3,7 @@ package com.physicalmed.physicalmedmanagement;
 public class UserSession {
 
     private static UserSession instance;
+    private String login;
     private String username;
     private String role;
 
@@ -17,9 +18,14 @@ public class UserSession {
         return instance;
     }
 
-    public void setUser(String username, String role){
+    public void setUser(String login, String username, String role){
+        this.login = login;
         this.username = username;
         this.role = role;
+    }
+
+    public String getLogin(){
+        return login;
     }
 
     public String getUsername() {
