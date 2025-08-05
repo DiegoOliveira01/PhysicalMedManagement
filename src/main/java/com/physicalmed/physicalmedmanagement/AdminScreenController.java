@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -13,7 +14,7 @@ public class AdminScreenController implements Initializable {
     private Label labelUserName;
 
     @FXML
-    private Button buttonAddProduct;
+    private Button buttonManageProduct;
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
@@ -21,14 +22,21 @@ public class AdminScreenController implements Initializable {
         labelUserName.setText(UserName);
 
         // Para o efeito do botão
-        buttonAddProduct.setOnMousePressed(e ->{
-                buttonAddProduct.setScaleX(0.95);
-                buttonAddProduct.setScaleY(0.95);
+        buttonManageProduct.setOnMousePressed(e ->{
+            buttonManageProduct.setScaleX(0.95);
+            buttonManageProduct.setScaleY(0.95);
         });
-        buttonAddProduct.setOnMouseReleased(e ->{
-            buttonAddProduct.setScaleX(1);
-            buttonAddProduct.setScaleY(1);
+        buttonManageProduct.setOnMouseReleased(e ->{
+            buttonManageProduct.setScaleX(1);
+            buttonManageProduct.setScaleY(1);
         });
+    }
+
+    public void startProductMenu(){
+
+        Stage currentStage = (Stage) buttonManageProduct.getScene().getWindow();
+        ScreenManager.changeScreen("/com/physicalmed/physicalmedmanagement/product-menu-view.fxml", "Menu de produtos", currentStage);
+
     }
 
 }
