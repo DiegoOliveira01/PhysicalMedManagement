@@ -3,17 +3,19 @@ package com.physicalmed.physicalmedmanagement;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ProductAddController implements Initializable {
@@ -21,7 +23,7 @@ public class ProductAddController implements Initializable {
     @FXML
     private TextField txtName;
     @FXML
-    private TextField txtPrice;
+    private TextField txtCost;
     @FXML
     private TextField txtPricePix;
     @FXML
@@ -44,8 +46,14 @@ public class ProductAddController implements Initializable {
     private ImageView imageProductView;
     @FXML
     private ImageView buttonReturnIcon;
+    @FXML
+    private Label labelError;
+    @FXML
+    private Pane paneForm;
 
     private File selectedImageFile;
+
+    private final DbFunctions dbFunctions = new DbFunctions();
 
     public void initialize(URL url, ResourceBundle resourceBundle){ // Esse método irá rodar ao iniciar a tela
 
@@ -91,7 +99,7 @@ public class ProductAddController implements Initializable {
         // Define oque pode ser digitado nos campos txt
         applyLettersOnlyMask(txtName);
         applyIntegerOnlyMask(txtStock);
-        applyNumericCommaMask(txtPrice);
+        applyNumericCommaMask(txtCost);
         applyNumericCommaMask(txtPricePix);
         applyNumericCommaMask(txtPriceCard);
         applyNumericCommaMask(txtPricePixDiscount);
@@ -118,6 +126,82 @@ public class ProductAddController implements Initializable {
     private void handleReturn(){
         Stage currentStage = (Stage) buttonReturn.getScene().getWindow();
         ScreenManager.changeScreen("/com/physicalmed/physicalmedmanagement/product-menu-view.fxml", "Menu de produtos", currentStage);
+    }
+
+    @FXML
+    private void handleSaveProduct(){
+        if (checkFields()){ // Chama o método para checar se os campos estão preenchidos
+            System.out.println("Todos os campos preenchidos!");
+        try {
+            String name = txtName.getText();
+            BigDecimal cost = new BigDecimal(txtCost.getText().replace(",", "."));
+            BigDecimal pixPrice = new BigDecimal(txtPricePix.getText().replace(",", "."));
+            BigDecimal cardPrice = new BigDecimal(txtPriceCard.getText().replace(",", "."));
+            BigDecimal minPixPrice = new BigDecimal(txtPricePixDiscount.getText().replace(",", "."));
+            BigDecimal minCardPrice = new BigDecimal(txtPriceCardDiscount.getText().replace(",", "."));
+            int stock = Integer.parseInt(txtStock.getText());
+            byte[] imageBytes = java.nio.file.Files.readAllBytes(selectedImageFile.toPath());
+
+            dbFunctions.saveProduct(name, cost, pixPrice, cardPrice, minPixPrice, minCardPrice, stock, imageBytes);
+            System.out.println("Indo salvar o produto na DB");
+
+            // Alerta de sucesso
+            Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+            successAlert.setTitle("Produto Salvo");
+            successAlert.setHeaderText(null);
+            successAlert.setContentText("Produto salvo com sucesso no banco de dados!");
+            successAlert.showAndWait();
+            cleanTxtFields();
+        } catch (RuntimeException | IOException | SQLException e) {
+            // Alerta de erro
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("Erro ao Salvar Produto");
+            errorAlert.setHeaderText("Ocorreu um erro ao tentar salvar o produto.");
+            errorAlert.setContentText(e.getMessage());
+            errorAlert.showAndWait();
+            throw new RuntimeException(e);
+        }
+        }
+
+
+    }
+
+    private BigDecimal parseBigDecimal(String value){
+        return new BigDecimal(value.replace(",", "."));
+    }
+
+    private boolean checkFields(){
+        boolean allFilled = true;
+
+        if (txtName.getText().isEmpty()
+                || txtCost.getText().isEmpty()
+                || txtPricePix.getText().isEmpty()
+                || txtPriceCard.getText().isEmpty()
+                || txtPricePixDiscount.getText().isEmpty()
+                || txtPriceCardDiscount.getText().isEmpty()
+                || txtStock.getText().isEmpty()
+                || selectedImageFile == null) {
+            labelError.setText("Preencha todos os campos para continuar!");
+            paneForm.setStyle("-fx-background-color: #ffcccc; -fx-background-radius: 6;");
+            allFilled = false;
+        }
+        else {
+            paneForm.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 6;");
+            labelError.setText(""); // limpa erro
+        }
+        return allFilled;
+    }
+
+    private void cleanTxtFields(){
+        txtName.setText("");
+        txtCost.setText("");
+        txtPricePix.setText("");
+        txtPriceCard.setText("");
+        txtPricePixDiscount.setText("");
+        txtPriceCardDiscount.setText("");
+        txtStock.setText("");
+        selectedImageFile = null; // Não usar .delete() :)
+        imageProductView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/physicalmed/physicalmedmanagement/images/fundo_salvar_imagem.png"))));
     }
 
     private void applyNumericCommaMask(TextField textField){

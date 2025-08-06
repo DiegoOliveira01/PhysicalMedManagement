@@ -2,6 +2,7 @@ package com.physicalmed.physicalmedmanagement;
 
 import org.postgresql.Driver;
 
+import java.math.BigDecimal;
 import java.sql.*;
 
 public class DbFunctions {
@@ -50,6 +51,28 @@ public class DbFunctions {
         }catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+    public void saveProduct(String name, BigDecimal cost, BigDecimal pixPrice, BigDecimal cardPrice, BigDecimal minPixPrice,
+                            BigDecimal minCardPrice, int stock, byte[] imageBytes) throws SQLException{
+        String query = "INSERT INTO product (product_name, cost, pix_price, credit_price, min_pix_price, min_credit_price, stock, product_image)" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)){
+
+            pstmt.setString(1, name);
+            pstmt.setBigDecimal(2, cost);
+            pstmt.setBigDecimal(3, pixPrice);
+            pstmt.setBigDecimal(4, cardPrice);
+            pstmt.setBigDecimal(5, minPixPrice);
+            pstmt.setBigDecimal(6, minCardPrice);
+            pstmt.setInt(7, stock);
+            pstmt.setBytes(8, imageBytes);
+
+            pstmt.executeUpdate();
+            System.out.println("Produto Salvo no banco de dados com sucesso!");
+        }
+
     }
 
 }
