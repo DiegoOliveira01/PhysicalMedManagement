@@ -4,6 +4,8 @@ import org.postgresql.Driver;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DbFunctions {
 
@@ -73,6 +75,36 @@ public class DbFunctions {
             System.out.println("Produto Salvo no banco de dados com sucesso!");
         }
 
+    }
+
+    public List<Product> getAllProducts(){
+        List<Product> products = new ArrayList<>();
+        String query = "SELECT product_id, product_name, cost, pix_price, credit_price, min_pix_price, min_credit_price, stock, product_image FROM product";
+
+
+        try (Connection conn = getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        ResultSet rs = pstmt.executeQuery()){
+
+            while (rs.next()){
+                Product p = new Product();
+                p.setProductId(rs.getInt("product_id"));
+                p.setProductName(rs.getString("product_name"));
+                p.setCost(rs.getBigDecimal("cost"));
+                p.setPixPrice(rs.getBigDecimal("pix_price"));
+                p.setCreditPrice(rs.getBigDecimal("credit_price"));
+                p.setPixPriceDiscount(rs.getBigDecimal("min_pix_price"));
+                p.setCreditPriceDiscount(rs.getBigDecimal("min_credit_price"));
+                p.setStock(rs.getInt("stock"));
+                p.setProductImage(rs.getBytes("product_image"));
+                products.add(p);
+            }
+
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return products;
     }
 
 }
