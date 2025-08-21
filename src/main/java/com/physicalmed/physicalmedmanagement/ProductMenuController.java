@@ -12,6 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.ByteArrayInputStream;
@@ -87,6 +88,7 @@ public class ProductMenuController implements Initializable {
         colName.setCellValueFactory(new PropertyValueFactory<>("productName"));
         colStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
 
+
         loadProducts(); // Carregar produtos
 
         tableProducts.getSelectionModel().selectedItemProperty().addListener( // Evento ao selecionar produto
@@ -133,6 +135,32 @@ public class ProductMenuController implements Initializable {
         Stage currentStage = (Stage) buttonAddProduct.getScene().getWindow();
         ScreenManager.changeScreen("/com/physicalmed/physicalmedmanagement/product-add-view.fxml", "Cadastrar Novo Produto", currentStage);
 
+    }
+
+    public void updateProduct(){
+        Product selected = tableProducts.getSelectionModel().getSelectedItem();
+
+        if (selected != null){
+            int updateProductId = selected.getProductId();
+            SessionManager.getInstance().setProductId(updateProductId);
+            System.out.println("Seleção != NULL Id do produto: " + updateProductId);
+
+            Stage currentStage = (Stage) buttonUpdateProduct.getScene().getWindow();
+            ScreenManager.changeScreen("/com/physicalmed/physicalmedmanagement/product-update-view.fxml", "Atualizar Produto", currentStage);
+        }
+        else {
+            System.out.println("Nenhum Item Selecionado");
+        }
+
+    }
+
+    public void deleteProduct(){
+        Product selected = tableProducts.getSelectionModel().getSelectedItem();
+
+        if (selected != null){
+            db.deleteProduct(selected.getProductId());
+            loadProducts();
+        }
     }
 
 

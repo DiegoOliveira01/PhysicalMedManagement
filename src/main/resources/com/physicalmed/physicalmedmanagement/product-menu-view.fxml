@@ -12,6 +12,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
@@ -35,7 +36,7 @@
                   <Font name="Segoe UI Bold" size="16.0" />
                </font>
             </Label>
-            <TableView fx:id="tableProducts" layoutX="31.0" layoutY="67.0" prefHeight="553.0" prefWidth="560.0" style="-fx-background-color: #F3F3F3;">
+            <TableView fx:id="tableProducts" layoutX="31.0" layoutY="67.0" prefHeight="553.0" prefWidth="560.0" style="-fx-background-color: #F3F3F3; fx-font-family: 'Segoe UI'; -fx-font-weight: bold; -fx-font-size: 15px;">
               <columns>
                 <TableColumn fx:id="colName" prefWidth="75.0" text="Nome" />
                 <TableColumn fx:id="colStock" prefWidth="75.0" text="Estoque" />
@@ -58,7 +59,7 @@
                   <DropShadow />
                </effect>
             </Button>
-            <Button fx:id="buttonUpdateProduct" layoutX="234.0" layoutY="642.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="155.0" style="-fx-background-radius: 6; -fx-background-color: #f9ff36;" text="Atualizar Produto">
+            <Button fx:id="buttonUpdateProduct" layoutX="234.0" layoutY="642.0" mnemonicParsing="false" onAction="#updateProduct" prefHeight="40.0" prefWidth="155.0" style="-fx-background-radius: 6; -fx-background-color: #f9ff36;" text="Atualizar Produto">
                <font>
                   <Font name="Segoe UI Bold" size="14.0" />
                </font>
@@ -69,7 +70,7 @@
                   <DropShadow />
                </effect>
             </Button>
-            <Button fx:id="buttonDeleteProduct" layoutX="436.0" layoutY="642.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="155.0" style="-fx-background-radius: 6; -fx-background-color: #f71a1a;" text="Excluir Produto" textFill="WHITE">
+            <Button fx:id="buttonDeleteProduct" layoutX="436.0" layoutY="642.0" mnemonicParsing="false" onAction="#deleteProduct" prefHeight="40.0" prefWidth="155.0" style="-fx-background-radius: 6; -fx-background-color: #f71a1a;" text="Excluir Produto" textFill="WHITE">
                <font>
                   <Font name="Segoe UI Bold" size="14.0" />
                </font>
@@ -294,11 +295,13 @@
                         <DropShadow />
                      </effect>
                   </Label>
-                  <ImageView fx:id="imageViewProduct" fitHeight="181.0" fitWidth="448.0" layoutX="118.0" layoutY="436.0" pickOnBounds="true">
-                     <image>
-                        <Image url="@images/fundo_salvar_imagem.png" />
-                     </image>
-                  </ImageView>
+                  <StackPane alignment="CENTER" layoutX="118.0" layoutY="421.0" prefHeight="181.0" prefWidth="448.0">
+                     <ImageView fx:id="imageViewProduct" fitHeight="181.0" fitWidth="448.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@images/fundo_salvar_imagem.png" />
+                        </image>
+                     </ImageView>
+                  </StackPane>
                </children>
                <effect>
                   <DropShadow />
