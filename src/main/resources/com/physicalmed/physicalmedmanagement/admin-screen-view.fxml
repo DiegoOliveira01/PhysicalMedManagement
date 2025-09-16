@@ -36,7 +36,18 @@
                   <Font name="Segoe UI Bold" size="20.0" />
                </font>
             </Label>
-            <Button fx:id="buttonManageProduct" layoutX="528.0" layoutY="573.0" mnemonicParsing="false" onAction="#startProductMenu" prefHeight="40.0" prefWidth="155.0" style="-fx-background-radius: 6; -fx-background-color: #F9FF89;" text="Gerenciar Produtos">
+            <Button fx:id="buttonManageProduct" layoutX="377.0" layoutY="572.0" mnemonicParsing="false" onAction="#startProductMenu" prefHeight="40.0" prefWidth="155.0" style="-fx-background-radius: 6; -fx-background-color: #F9FF89;" text="Gerenciar Produtos">
+               <font>
+                  <Font name="Segoe UI Bold" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Button>
+            <Button fx:id="buttonManagePayment" layoutX="619.0" layoutY="572.0" mnemonicParsing="false" onAction="#startPaymentMenu" prefHeight="40.0" prefWidth="250.0" style="-fx-background-radius: 6; -fx-background-color: #F9FF89;" text="Gerenciar Formas De Pagamento">
                <font>
                   <Font name="Segoe UI Bold" size="14.0" />
                </font>

@@ -15,6 +15,8 @@ public class AdminScreenController implements Initializable {
 
     @FXML
     private Button buttonManageProduct;
+    @FXML
+    private Button buttonManagePayment;
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
@@ -33,10 +35,13 @@ public class AdminScreenController implements Initializable {
     }
 
     public void startProductMenu(){
-
         Stage currentStage = (Stage) buttonManageProduct.getScene().getWindow();
         ScreenManager.changeScreen("/com/physicalmed/physicalmedmanagement/product-menu-view.fxml", "Menu de produtos", currentStage);
 
+    }
+    public void startPaymentMenu(){
+        Stage currentStage = (Stage) buttonManageProduct.getScene().getWindow();
+        ScreenManager.changeScreen("/com/physicalmed/physicalmedmanagement/payment-menu-view.fxml", "Menu de formas de pagamento", currentStage);
     }
 
 }

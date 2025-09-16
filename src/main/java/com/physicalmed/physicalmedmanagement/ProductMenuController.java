@@ -5,10 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,6 +16,7 @@ import java.io.ByteArrayInputStream;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ProductMenuController implements Initializable {
@@ -158,8 +156,25 @@ public class ProductMenuController implements Initializable {
         Product selected = tableProducts.getSelectionModel().getSelectedItem();
 
         if (selected != null){
-            db.deleteProduct(selected.getProductId());
-            loadProducts();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Você tem certeza?");
+            alert.setHeaderText(null);
+            alert.setContentText("Você tem certeza que deseja excluir esse produto?");
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK){
+                db.deleteProduct(selected.getProductId());
+                loadProducts();
+            }
+            System.out.println("Exclusão do produto cancelada");
+        }
+        else {
+            System.out.println("Selecione um produto!");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Por favor selecione um produto");
+            alert.setHeaderText(null);
+            alert.setContentText("Para excluir um produto selecione ele na tabela na esquerda!");
+            alert.showAndWait();
         }
     }
 

@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.physicalmed.physicalmedmanagement.PaymentAddController">
+   <children>
+      <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true">
+         <image>
+            <Image url="@images/Fundo_Gradiente.png" />
+         </image>
+         <effect>
+            <InnerShadow />
+         </effect>
+      </ImageView>
+      <Pane layoutX="24.0" layoutY="21.0" prefHeight="678.0" prefWidth="1233.0" style="-fx-background-color: #ffffff;">
+         <effect>
+            <DropShadow />
+         </effect>
+         <children>
+            <Label alignment="CENTER" layoutY="-1.0" prefHeight="36.0" prefWidth="1233.0" style="-fx-background-color: #23A5E1;" text="Cadastro De Forma De Pagamento">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0" />
+               </font>
+            </Label>
+            <Button fx:id="buttonReturn" alignment="CENTER_RIGHT" layoutX="1130.0" layoutY="3.0" mnemonicParsing="false" onAction="#handleReturn" prefHeight="19.0" prefWidth="92.0" style="-fx-background-radius: 6; -fx-background-color: #f71a1a;" text="Voltar  " textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI Bold" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <ImageView fx:id="buttonReturnIcon" fitHeight="23.0" fitWidth="46.0" layoutX="1126.0" layoutY="5.0" onMouseClicked="#handleReturn" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/voltar.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Pane fx:id="paneForm" layoutX="183.0" layoutY="69.0" prefHeight="566.0" prefWidth="868.0" style="-fx-background-color: #ffffff; -fx-background-radius: 6;">
+               <children>
+                  <TextField fx:id="txtName" layoutX="259.0" layoutY="35.0" prefHeight="40.0" prefWidth="351.0" promptText="DIgite o nome da forma de pagamento" style="-fx-background-radius: 6; -fx-border-color: #ffffff; -fx-border-radius: 8; -fx-background-color: #EFF9FD;">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets left="60.0" />
+                     </padding>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </TextField>
+                  <CheckBox fx:id="checkBoxInstallment" alignment="CENTER" contentDisplay="CENTER" layoutX="259.0" layoutY="108.0" mnemonicParsing="false" onAction="#handleInstallmentsVisibility" prefHeight="34.0" prefWidth="351.0" selected="true" style="-fx-background-color: #EFF9FD; -fx-background-radius: 6;" text="É uma forma de pagamento à Vista?">
+                     <font>
+                        <Font name="Segoe UI" size="16.0" />
+                     </font>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                     <padding>
+                        <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                     </padding>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </CheckBox>
+                  <Label alignment="CENTER" layoutX="259.0" layoutY="46.0" prefHeight="19.0" prefWidth="55.0" text="Nome:">
+                     <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Pane layoutY="169.0" prefHeight="5.0" prefWidth="868.0" style="-fx-background-color: #000000;">
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </Pane>
+                  <Label alignment="CENTER" layoutX="272.0" layoutY="183.0" prefHeight="19.0" prefWidth="326.0" text="Preencha os dados de taxas abaixo em %">
+                     <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtTax1x" layoutX="259.0" layoutY="214.0" prefHeight="27.0" prefWidth="110.0" promptText="1,00" style="-fx-background-radius: 6; -fx-border-color: #ffffff; -fx-border-radius: 8; -fx-background-color: #EFF9FD;">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <TextField fx:id="txtTax2x" layoutX="259.0" layoutY="261.0" prefHeight="27.0" prefWidth="110.0" promptText="1,00" style="-fx-background-radius: 6; -fx-border-color: #ffffff; -fx-border-radius: 8; -fx-background-color: #EFF9FD;">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </TextField>
+                  <TextField fx:id="txtTax3x" layoutX="259.0" layoutY="308.0" prefHeight="27.0" prefWidth="110.0" promptText="1,00" style="-fx-background-radius: 6; -fx-border-color: #ffffff; -fx-border-radius: 8; -fx-background-color: #EFF9FD;">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </TextField>
+                  <TextField fx:id="txtTax4x" layoutX="259.0" layoutY="355.0" prefHeight="27.0" prefWidth="110.0" promptText="1,00" style="-fx-background-radius: 6; -fx-border-color: #ffffff; -fx-border-radius: 8; -fx-background-color: #EFF9FD;">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </TextField>
+                  <TextField fx:id="txtTax5x" layoutX="259.0" layoutY="402.0" prefHeight="27.0" prefWidth="110.0" promptText="1,00" style="-fx-background-radius: 6; -fx-border-color: #ffffff; -fx-border-radius: 8; -fx-background-color: #EFF9FD;">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </TextField>
+                  <TextField fx:id="txtTax6x" layoutX="259.0" layoutY="449.0" prefHeight="27.0" prefWidth="110.0" promptText="1,00" style="-fx-background-radius: 6; -fx-border-color: #ffffff; -fx-border-radius: 8; -fx-background-color: #EFF9FD;">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </TextField>
+                  <TextField fx:id="txtTax7x" layoutX="501.0" layoutY="214.0" prefHeight="27.0" prefWidth="110.0" promptText="1,00" style="-fx-background-radius: 6; -fx-border-color: #ffffff; -fx-border-radius: 8; -fx-background-color: #EFF9FD;">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </TextField>
+                  <TextField fx:id="txtTax8x" layoutX="501.0" layoutY="261.0" prefHeight="27.0" prefWidth="110.0" promptText="1,00" style="-fx-background-radius: 6; -fx-border-color: #ffffff; -fx-border-radius: 8; -fx-background-color: #EFF9FD;">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </TextField>
+                  <TextField fx:id="txtTax9x" layoutX="501.0" layoutY="308.0" prefHeight="27.0" prefWidth="110.0" promptText="1,00" style="-fx-background-radius: 6; -fx-border-color: #ffffff; -fx-border-radius: 8; -fx-background-color: #EFF9FD;">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </TextField>
+                  <TextField fx:id="txtTax10x" layoutX="501.0" layoutY="355.0" prefHeight="27.0" prefWidth="110.0" promptText="1,00" style="-fx-background-radius: 6; -fx-border-color: #ffffff; -fx-border-radius: 8; -fx-background-color: #EFF9FD;">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets left="32.0" />
+                     </padding>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </TextField>
+                  <TextField fx:id="txtTax11x" layoutX="501.0" layoutY="402.0" prefHeight="27.0" prefWidth="110.0" promptText="1,00" style="-fx-background-radius: 6; -fx-border-color: #ffffff; -fx-border-radius: 8; -fx-background-color: #EFF9FD;">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets left="32.0" />
+                     </padding>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </TextField>
+                  <TextField fx:id="txtTax12x" layoutX="501.0" layoutY="449.0" prefHeight="27.0" prefWidth="110.0" promptText="1,00" style="-fx-background-radius: 6; -fx-border-color: #ffffff; -fx-border-radius: 8; -fx-background-color: #EFF9FD;">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets left="32.0" />
+                     </padding>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </TextField>
+                  <Button fx:id="buttonSavePayment" layoutX="258.0" layoutY="505.0" mnemonicParsing="false" onAction="#handleSavePayment" prefHeight="40.0" prefWidth="155.0" style="-fx-background-radius: 6; -fx-background-color: #34EB2E;" text="Salvar Produto">
+                     <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </Button>
+                  <Button fx:id="buttonCancel" layoutX="457.0" layoutY="505.0" mnemonicParsing="false" onAction="#handleReturn" prefHeight="40.0" prefWidth="155.0" style="-fx-background-radius: 6; -fx-background-color: #6898FF;" text="Cancelar">
+                     <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </Button>
+                  <Label fx:id="labelTax2x" alignment="CENTER" layoutX="259.0" layoutY="265.0" prefHeight="19.0" prefWidth="34.0" text="2x">
+                     <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelTax3x" alignment="CENTER" layoutX="259.0" layoutY="312.0" prefHeight="19.0" prefWidth="34.0" text="3x">
+                     <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelTax4x" alignment="CENTER" layoutX="259.0" layoutY="359.0" prefHeight="19.0" prefWidth="34.0" text="4x">
+                     <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelTax8x" alignment="CENTER" layoutX="501.0" layoutY="265.0" prefHeight="19.0" prefWidth="34.0" text="8x">
+                     <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelTax9x" alignment="CENTER" layoutX="501.0" layoutY="312.0" prefHeight="19.0" prefWidth="34.0" text="9x">
+                     <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelTax1x" alignment="CENTER" layoutX="259.0" layoutY="218.0" prefHeight="19.0" prefWidth="34.0" text="1x">
+                     <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelTax6x" alignment="CENTER" layoutX="259.0" layoutY="453.0" prefHeight="19.0" prefWidth="34.0" text="6x">
+                     <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelTax5x" alignment="CENTER" layoutX="259.0" layoutY="406.0" prefHeight="19.0" prefWidth="34.0" text="5x">
+                     <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelTax7x" alignment="CENTER" layoutX="501.0" layoutY="218.0" prefHeight="19.0" prefWidth="34.0" text="7x">
+                     <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelTax10x" alignment="CENTER" layoutX="501.0" layoutY="359.0" prefHeight="19.0" prefWidth="34.0" text="10x">
+                     <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelTax11x" alignment="CENTER" layoutX="501.0" layoutY="406.0" prefHeight="19.0" prefWidth="34.0" text="11x">
+                     <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelTax12x" alignment="CENTER" layoutX="501.0" layoutY="453.0" prefHeight="19.0" prefWidth="34.0" text="12x">
+                     <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtTax" layoutX="379.0" layoutY="237.0" prefHeight="27.0" prefWidth="110.0" promptText="1,00" style="-fx-background-radius: 6; -fx-border-color: #ffffff; -fx-border-radius: 8; -fx-background-color: #EFF9FD;">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <Label fx:id="labelTax" alignment="CENTER" layoutX="379.0" layoutY="241.0" prefHeight="19.0" prefWidth="34.0" text="1x">
+                     <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color red="0.31578946113586426" green="0.31578946113586426" blue="0.31578946113586426" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Pane>
+            <Label fx:id="labelError" alignment="CENTER" contentDisplay="CENTER" layoutX="824.0" layoutY="487.0" prefHeight="40.0" prefWidth="284.0" textAlignment="JUSTIFY" textFill="RED" textOverrun="CLIP" wrapText="true">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
