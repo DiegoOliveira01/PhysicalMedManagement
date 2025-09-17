@@ -191,4 +191,51 @@ public class DbFunctions {
         }
     }
 
+    public void savePaymentSingleTax(String paymentName, int installments, BigDecimal tax){
+        String query = "INSERT INTO payment (payment_method, installments, taxes) VALUES (?, ?, ?)";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)){
+
+            pstmt.setString(1, paymentName);
+            pstmt.setInt(2, installments);
+            pstmt.setBigDecimal(3, tax);
+
+            pstmt.executeUpdate();
+            System.out.println("Produto Salvo no banco de dados com sucesso!");
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public void savePaymentMultiTax(String paymentName, BigDecimal tax1, BigDecimal tax2, BigDecimal tax3,
+                                    BigDecimal tax4, BigDecimal tax5, BigDecimal tax6, BigDecimal tax7, BigDecimal tax8,
+                                    BigDecimal tax9, BigDecimal tax10, BigDecimal tax11, BigDecimal tax12){
+        String query = "INSERT INTO payment (payment_method, installments, taxes) VALUES (?, ?, ?)";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)){
+
+            BigDecimal[] taxes = {tax1, tax2, tax3, tax4, tax5, tax6, tax7, tax8, tax9, tax10, tax11, tax12};
+
+            for (int i = 0; i < taxes.length; i++){
+                if (taxes[i] != null){ // Só salva se a taxa não for nula
+                    pstmt.setString(1, paymentName);
+                    pstmt.setInt(2, i + 1); // installments: 1, 2, 3, ..., 12
+                    pstmt.setBigDecimal(3, taxes[i]); // Adiciona ao batch para execução em lote
+                    pstmt.addBatch();
+                }
+            }
+
+            pstmt.executeBatch();
+            System.out.println("Produto Salvo no banco de dados com sucesso!");
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
+
 }

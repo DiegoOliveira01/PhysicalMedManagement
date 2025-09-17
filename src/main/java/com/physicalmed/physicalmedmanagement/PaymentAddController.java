@@ -6,9 +6,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class PaymentAddController implements Initializable {
@@ -70,16 +74,122 @@ public class PaymentAddController implements Initializable {
     @FXML
     private Label labelTax12x;
     @FXML
+    private Label labelError;
+    @FXML
     private Button buttonReturn;
+    @FXML
+    private Button buttonSavePayment;
+    @FXML
+    private Button buttonCancel;
+    @FXML
+    private ImageView buttonReturnIcon;
+
+    private final DbFunctions dbFunctions = new DbFunctions();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
-        disableTaxesTxt();
+        disableTaxesTxt(); // Iniciar com a CheckBox marcada
+
+        // Para o efeito ao clicar nos botões
+        buttonSavePayment.setOnMousePressed(e ->{
+            buttonSavePayment.setScaleX(0.95);
+            buttonSavePayment.setScaleY(0.95);
+        });
+        buttonSavePayment.setOnMouseReleased(e ->{
+            buttonSavePayment.setScaleX(1);
+            buttonSavePayment.setScaleY(1);
+        });
+        buttonCancel.setOnMousePressed(e ->{
+            buttonCancel.setScaleX(0.95);
+            buttonCancel.setScaleY(0.95);
+        });
+        buttonCancel.setOnMouseReleased(e ->{
+            buttonCancel.setScaleX(1);
+            buttonCancel.setScaleY(1);
+        });
+        buttonReturn.setOnMousePressed(e ->{
+            buttonReturn.setScaleX(0.95);
+            buttonReturn.setScaleY(0.95);
+            buttonReturnIcon.setScaleX(0.90);
+            buttonReturnIcon.setScaleY(0.90);
+        });
+        buttonReturn.setOnMouseReleased(e ->{
+            buttonReturn.setScaleX(1);
+            buttonReturn.setScaleY(1);
+            buttonReturnIcon.setScaleX(1);
+            buttonReturnIcon.setScaleY(1);
+        });
+
+        // Define oque pode ser digitado nos campos txt
+        applyLettersOnlyMask(txtName);
+        applyNumericCommaMask(txtTax);
+        applyNumericCommaMask(txtTax1x);
+        applyNumericCommaMask(txtTax2x);
+        applyNumericCommaMask(txtTax3x);
+        applyNumericCommaMask(txtTax4x);
+        applyNumericCommaMask(txtTax5x);
+        applyNumericCommaMask(txtTax6x);
+        applyNumericCommaMask(txtTax7x);
+        applyNumericCommaMask(txtTax8x);
+        applyNumericCommaMask(txtTax9x);
+        applyNumericCommaMask(txtTax10x);
+        applyNumericCommaMask(txtTax11x);
+        applyNumericCommaMask(txtTax12x);
     }
 
     @FXML
     private void handleSavePayment(){
+        boolean checkBoxIsSelected = checkBoxInstallment.isSelected();
+        labelError.setText("");
 
+        if (checkBoxIsSelected){ // CheckBox Marcada (Pagamento à vista)
+            if (txtName.getText().isEmpty() || txtTax.getText().isEmpty()){ // Checa se os campos estão preenchidos
+                labelError.setText("Preencha o campo de taxa para essa forma de pagamento, ser não houver taxa coloque 0,00");
+                return;
+            }
+            else { // Se os campos estiverem preenchidos segue para salvar no banco
+                try {
+                    String paymentName = txtName.getText();
+                    int installments = 0;
+                    BigDecimal tax = new BigDecimal(txtTax.getText().replace(",", "."));
+
+                    dbFunctions.savePaymentSingleTax(paymentName, installments, tax);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        }
+        if (!checkBoxIsSelected){ // CheckBox Desmarcada (Pagamento parcelado)
+            if (txtName.getText().isEmpty() || txtTax1x.getText().isEmpty() || txtTax2x.getText().isEmpty() || txtTax3x.getText().isEmpty() // Checa se os campos estão preenchidos
+            || txtTax4x.getText().isEmpty() || txtTax5x.getText().isEmpty() || txtTax6x.getText().isEmpty()
+            || txtTax7x.getText().isEmpty() || txtTax8x.getText().isEmpty() || txtTax9x.getText().isEmpty()
+            || txtTax10x.getText().isEmpty() || txtTax11x.getText().isEmpty() || txtTax12x.getText().isEmpty()){
+                labelError.setText("Preencha todos os campos de taxa para essa forma de pagamento");
+                return;
+            }
+            else { // Se os campos estiverem preenchidos segue para salvar no banco
+                try {
+                    String paymentName = txtName.getText();
+                    BigDecimal tax1 = new BigDecimal(txtTax1x.getText().replace(",", "."));
+                    BigDecimal tax2 = new BigDecimal(txtTax2x.getText().replace(",", "."));
+                    BigDecimal tax3 = new BigDecimal(txtTax3x.getText().replace(",", "."));
+                    BigDecimal tax4 = new BigDecimal(txtTax4x.getText().replace(",", "."));
+                    BigDecimal tax5 = new BigDecimal(txtTax5x.getText().replace(",", "."));
+                    BigDecimal tax6 = new BigDecimal(txtTax6x.getText().replace(",", "."));
+                    BigDecimal tax7 = new BigDecimal(txtTax7x.getText().replace(",", "."));
+                    BigDecimal tax8 = new BigDecimal(txtTax8x.getText().replace(",", "."));
+                    BigDecimal tax9 = new BigDecimal(txtTax9x.getText().replace(",", "."));
+                    BigDecimal tax10 = new BigDecimal(txtTax10x.getText().replace(",", "."));
+                    BigDecimal tax11 = new BigDecimal(txtTax11x.getText().replace(",", "."));
+                    BigDecimal tax12 = new BigDecimal(txtTax12x.getText().replace(",", "."));
+
+                    dbFunctions.savePaymentMultiTax(paymentName, tax1, tax2, tax3, tax4, tax5, tax6, tax7, tax8, tax9, tax10, tax11, tax12);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 
     @FXML
@@ -155,6 +265,22 @@ public class PaymentAddController implements Initializable {
     private void enableTaxTxt(){
         txtTax.setVisible(true);
         labelTax.setVisible(true);
+    }
+
+    private void applyNumericCommaMask(TextField textField){
+        textField.textProperty().addListener((obs, oldText, newText) -> {
+            if (!newText.matches("\\d{0,2}(,\\d{0,2})?")){
+                textField.setText(oldText);
+            }
+        });
+    }
+
+    private void applyLettersOnlyMask(TextField textField) {
+        textField.textProperty().addListener((obs, oldText, newText) -> {
+            if (!newText.matches("[a-zA-ZÀ-ÿ\\s]*")) {
+                textField.setText(oldText);
+            }
+        });
     }
 
     @FXML
