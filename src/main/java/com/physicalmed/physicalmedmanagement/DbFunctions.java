@@ -1,11 +1,11 @@
 package com.physicalmed.physicalmedmanagement;
 
-import org.postgresql.Driver;
-
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DbFunctions {
 
@@ -114,6 +114,62 @@ public class DbFunctions {
             e.printStackTrace();
         }
         return products;
+    }
+
+    public List<PaymentSingle> getAllSinglePayments(){
+        List<PaymentSingle> singlePayments = new ArrayList<>();
+        String query = "SELECT payment_id, payment_method, taxes FROM payment WHERE installments = 0";
+
+        try (Connection conn = getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        ResultSet rs = pstmt.executeQuery()){
+
+            while (rs.next()) {
+                PaymentSingle payment = new PaymentSingle(
+                    rs.getInt("payment_id"),
+                    rs.getString("payment_method"),
+                    rs.getBigDecimal("taxes")
+                );
+                singlePayments.add(payment);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return singlePayments;
+    }
+
+    public List<PaymentMulti> getAllMultiPayments() {
+        Map<String, PaymentMulti> paymentMap = new HashMap<>(); // key: payment_method (trimmed, kept original case)
+        String query = "SELECT payment_id, payment_method, installments, taxes " +
+                "FROM payment WHERE installments > 0 " +
+                "ORDER BY payment_method, installments";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                int paymentId = rs.getInt("payment_id");
+                String paymentName = rs.getString("payment_method").trim();
+                int installment = rs.getInt("installments");
+                BigDecimal tax = rs.getBigDecimal("taxes");
+
+                // Use payment_method como chave para agrupar todas as parcelas do mesmo metodo
+                PaymentMulti payment = paymentMap.get(paymentName);
+                if (payment == null) {
+                    payment = new PaymentMulti(paymentId, paymentName);
+                    paymentMap.put(paymentName, payment);
+                }
+
+                payment.addInstallmentTax(installment, tax);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return new ArrayList<>(paymentMap.values());
     }
 
     public void saveProduct(String name, BigDecimal cost, BigDecimal pixPrice, BigDecimal cardPrice, BigDecimal minPixPrice,

@@ -147,6 +147,12 @@ public class PaymentAddController implements Initializable {
                 labelError.setText("Preencha o campo de taxa para essa forma de pagamento, ser não houver taxa coloque 0,00");
                 return;
             }
+
+            if (txtName.getLength() > 35){
+                labelError.setText("O Limite de caracteres para o nome é de 35");
+                return;
+            }
+
             else { // Se os campos estiverem preenchidos segue para salvar no banco
                 try {
                     String paymentName = txtName.getText();
