@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
@@ -15,7 +14,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.physicalmed.physicalmedmanagement.PaymentAddController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.physicalmed.physicalmedmanagement.PaymentUpdateController">
    <children>
       <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true">
          <image>
@@ -30,7 +29,7 @@
             <DropShadow />
          </effect>
          <children>
-            <Label alignment="CENTER" layoutY="-1.0" prefHeight="36.0" prefWidth="1233.0" style="-fx-background-color: #23A5E1;" text="Cadastro De Forma De Pagamento">
+            <Label alignment="CENTER" layoutY="-1.0" prefHeight="36.0" prefWidth="1233.0" style="-fx-background-color: #23A5E1;" text="Atualização De Forma De Pagamento">
                <font>
                   <Font name="Segoe UI Bold" size="16.0" />
                </font>
@@ -55,7 +54,7 @@
                <children>
                   <TextField fx:id="txtName" layoutX="259.0" layoutY="27.0" prefHeight="40.0" prefWidth="351.0" promptText="DIgite o nome da forma de pagamento" style="-fx-background-radius: 6; -fx-border-color: #ffffff; -fx-border-radius: 8; -fx-background-color: #EFF9FD;">
                      <font>
-                        <Font size="16.0" />
+                        <Font name="Segoe UI" size="16.0" />
                      </font>
                      <padding>
                         <Insets left="60.0" />
@@ -64,23 +63,6 @@
                         <DropShadow />
                      </effect>
                   </TextField>
-                  <CheckBox fx:id="checkBoxInstallment" alignment="CENTER" contentDisplay="CENTER" layoutX="259.0" layoutY="96.0" mnemonicParsing="false" onAction="#handleInstallmentsVisibility" prefHeight="34.0" prefWidth="351.0" selected="true" style="-fx-background-color: #EFF9FD; -fx-background-radius: 6;" text="É uma forma de pagamento à Vista?">
-                     <font>
-                        <Font name="Segoe UI" size="16.0" />
-                     </font>
-                     <effect>
-                        <DropShadow />
-                     </effect>
-                     <padding>
-                        <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
-                     </padding>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </CheckBox>
                   <Label alignment="CENTER" layoutX="259.0" layoutY="38.0" prefHeight="19.0" prefWidth="55.0" text="Nome:">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
@@ -231,7 +213,7 @@
                         <DropShadow />
                      </effect>
                   </TextField>
-                  <Button fx:id="buttonSavePayment" layoutX="259.0" layoutY="545.0" mnemonicParsing="false" onAction="#handleSavePayment" prefHeight="40.0" prefWidth="155.0" style="-fx-background-radius: 6; -fx-background-color: #34EB2E;" text="Salvar">
+                  <Button fx:id="buttonUpdatePayment" layoutX="260.0" layoutY="543.0" mnemonicParsing="false" onAction="#handleUpdatePayment" prefHeight="40.0" prefWidth="155.0" style="-fx-background-radius: 6; -fx-background-color: #34EB2E;" text="Atualizar">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>
@@ -242,7 +224,7 @@
                         <DropShadow />
                      </effect>
                   </Button>
-                  <Button fx:id="buttonCancel" layoutX="458.0" layoutY="545.0" mnemonicParsing="false" onAction="#handleReturn" prefHeight="40.0" prefWidth="155.0" style="-fx-background-radius: 6; -fx-background-color: #6898FF;" text="Cancelar">
+                  <Button fx:id="buttonCancel" layoutX="455.0" layoutY="543.0" mnemonicParsing="false" onAction="#handleReturn" prefHeight="40.0" prefWidth="155.0" style="-fx-background-radius: 6; -fx-background-color: #6898FF;" text="Cancelar">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>
@@ -333,6 +315,14 @@
                      </font>
                   </Label>
                   <Label fx:id="labelError" alignment="CENTER" contentDisplay="CENTER" layoutX="260.0" layoutY="487.0" prefHeight="40.0" prefWidth="351.0" textAlignment="JUSTIFY" textFill="RED" textOverrun="CLIP" wrapText="true">
+                     <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelInstallmentType" alignment="CENTER" layoutX="259.0" layoutY="97.0" prefHeight="36.0" prefWidth="351.0" style="-fx-background-radius: 6; -fx-border-color: #ffffff; -fx-border-radius: 8; -fx-background-color: #EFF9FD;" text="À Vista / Parcelado">
+                     <effect>
+                        <DropShadow />
+                     </effect>
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>

@@ -2,10 +2,7 @@ package com.physicalmed.physicalmedmanagement;
 
 import java.math.BigDecimal;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DbFunctions {
 
@@ -172,6 +169,84 @@ public class DbFunctions {
         return new ArrayList<>(paymentMap.values());
     }
 
+    public PaymentSingle getSinglePaymentByName(String paymentName){
+        String query = "SELECT payment_id, payment_method, taxes FROM payment WHERE payment_method = ? AND installments = 0";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, paymentName);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return new PaymentSingle(
+                        rs.getInt("payment_id"),
+                        rs.getString("payment_method"),
+                        rs.getBigDecimal("taxes")
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+    public PaymentMulti getMultiPaymentByName(String paymentName){
+        String query = "SELECT payment_id, payment_method, installments, taxes FROM payment " +
+                "WHERE payment_method = ? AND installments > 0 ORDER BY installments";
+
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, paymentName);
+            ResultSet rs = pstmt.executeQuery();
+
+            PaymentMulti paymentMulti = null;
+
+            while (rs.next()){
+                if (paymentMulti == null){
+                    paymentMulti = new PaymentMulti(
+                            rs.getInt("payment_id"),
+                            rs.getString("payment_method")
+                    );
+                }
+
+                int installment = rs.getInt("installments");
+                BigDecimal tax = rs.getBigDecimal("taxes");
+
+                paymentMulti.addInstallmentTax(installment, tax);
+
+            }
+
+            return paymentMulti;
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<String> getAllPaymentMethods(){ // Pega todos os payment_method e coloca em uma lista, para testar se o nome do payment_method já existe
+        List<String> methods = new ArrayList<>();
+        String query = "SELECT DISTINCT payment_method FROM payment";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                methods.add(rs.getString("payment_method"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return methods;
+    }
+
     public void saveProduct(String name, BigDecimal cost, BigDecimal pixPrice, BigDecimal cardPrice, BigDecimal minPixPrice,
                             BigDecimal minCardPrice, int stock, byte[] imageBytes) throws SQLException{
         String query = "INSERT INTO product (product_name, cost, pix_price, credit_price, min_pix_price, min_credit_price, stock, product_image)" +
@@ -190,6 +265,69 @@ public class DbFunctions {
 
             pstmt.executeUpdate();
             System.out.println("Produto Salvo no banco de dados com sucesso!");
+        }
+
+    }
+
+    public void savePaymentSingleTax(String paymentName, int installments, BigDecimal tax){
+        String query = "INSERT INTO payment (payment_method, installments, taxes) VALUES (?, ?, ?)";
+
+        DbFunctions dbFunctions = new DbFunctions();
+        List<String> existingMethods = dbFunctions.getAllPaymentMethods();
+
+        if (existingMethods.contains(paymentName)){
+            System.out.println("O nome dessa forma de pagamento já existe!");
+            return;
+        }
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)){
+
+            pstmt.setString(1, paymentName);
+            pstmt.setInt(2, installments);
+            pstmt.setBigDecimal(3, tax);
+
+            pstmt.executeUpdate();
+            System.out.println("Produto Salvo no banco de dados com sucesso!");
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public void savePaymentMultiTax(String paymentName, BigDecimal tax1, BigDecimal tax2, BigDecimal tax3,
+                                    BigDecimal tax4, BigDecimal tax5, BigDecimal tax6, BigDecimal tax7, BigDecimal tax8,
+                                    BigDecimal tax9, BigDecimal tax10, BigDecimal tax11, BigDecimal tax12){
+        String query = "INSERT INTO payment (payment_method, installments, taxes) VALUES (?, ?, ?)";
+
+        DbFunctions dbFunctions = new DbFunctions();
+        List<String> existingMethods = dbFunctions.getAllPaymentMethods();
+
+        if (existingMethods.contains(paymentName)){
+            System.out.println("O nome dessa forma de pagamento já existe!");
+            return;
+        }
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)){
+
+            BigDecimal[] taxes = {tax1, tax2, tax3, tax4, tax5, tax6, tax7, tax8, tax9, tax10, tax11, tax12};
+
+            for (int i = 0; i < taxes.length; i++){
+                if (taxes[i] != null){ // Só salva se a taxa não for nula
+                    pstmt.setString(1, paymentName);
+                    pstmt.setInt(2, i + 1); // installments: 1, 2, 3, ..., 12
+                    pstmt.setBigDecimal(3, taxes[i]); // Adiciona ao batch para execução em lote
+                    pstmt.addBatch();
+                }
+            }
+
+            pstmt.executeBatch();
+            System.out.println("Produto Salvo no banco de dados com sucesso!");
+        }
+        catch (SQLException e){
+            e.printStackTrace();
         }
 
     }
@@ -225,6 +363,38 @@ public class DbFunctions {
         }
     }
 
+    public void updateSinglePayment(String paymentName, BigDecimal tax, String oldPaymentName){
+        String query = "UPDATE payment SET payment_method = ?, taxes = ? WHERE payment_method = ? AND installments = 0";
+
+        DbFunctions dbFunctions = new DbFunctions();
+        List<String> existingMethods = dbFunctions.getAllPaymentMethods();
+
+        if (existingMethods.contains(paymentName) && !Objects.equals(oldPaymentName, paymentName)){
+            System.out.println("O nome dessa forma de pagamento já existe!");
+            return;
+        }
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)){
+
+            pstmt.setString(1, paymentName);
+            pstmt.setBigDecimal(2, tax);
+            pstmt.setString(3, oldPaymentName);
+
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0){
+                System.out.println("Forma de pagamento atualizada com sucesso!");
+            }
+            else{
+                System.out.println("Ocorrey algum erro ao atualizar o método de pagamento");
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
+
     public void deleteProduct(int productId){
         String query = "DELETE FROM product WHERE product_id = ?";
 
@@ -247,51 +417,6 @@ public class DbFunctions {
         }
     }
 
-    public void savePaymentSingleTax(String paymentName, int installments, BigDecimal tax){
-        String query = "INSERT INTO payment (payment_method, installments, taxes) VALUES (?, ?, ?)";
 
-        try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)){
-
-            pstmt.setString(1, paymentName);
-            pstmt.setInt(2, installments);
-            pstmt.setBigDecimal(3, tax);
-
-            pstmt.executeUpdate();
-            System.out.println("Produto Salvo no banco de dados com sucesso!");
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
-
-    }
-
-    public void savePaymentMultiTax(String paymentName, BigDecimal tax1, BigDecimal tax2, BigDecimal tax3,
-                                    BigDecimal tax4, BigDecimal tax5, BigDecimal tax6, BigDecimal tax7, BigDecimal tax8,
-                                    BigDecimal tax9, BigDecimal tax10, BigDecimal tax11, BigDecimal tax12){
-        String query = "INSERT INTO payment (payment_method, installments, taxes) VALUES (?, ?, ?)";
-
-        try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)){
-
-            BigDecimal[] taxes = {tax1, tax2, tax3, tax4, tax5, tax6, tax7, tax8, tax9, tax10, tax11, tax12};
-
-            for (int i = 0; i < taxes.length; i++){
-                if (taxes[i] != null){ // Só salva se a taxa não for nula
-                    pstmt.setString(1, paymentName);
-                    pstmt.setInt(2, i + 1); // installments: 1, 2, 3, ..., 12
-                    pstmt.setBigDecimal(3, taxes[i]); // Adiciona ao batch para execução em lote
-                    pstmt.addBatch();
-                }
-            }
-
-            pstmt.executeBatch();
-            System.out.println("Produto Salvo no banco de dados com sucesso!");
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
-
-    }
 
 }

@@ -46,7 +46,7 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                     </columnResizePolicy>
                 </TableView>
-                <Button fx:id="buttonAddPayment" layoutX="31.0" layoutY="642.0" mnemonicParsing="false" onAction="#handleAddPayment" prefHeight="40.0" prefWidth="173.0" style="-fx-background-radius: 6; -fx-background-color: #34EB2E;" text="Adicionar Pagamento">
+                <Button fx:id="buttonAddPayment" layoutX="31.0" layoutY="658.0" mnemonicParsing="false" onAction="#handleAddPayment" prefHeight="40.0" prefWidth="173.0" style="-fx-background-radius: 6; -fx-background-color: #34EB2E;" text="Adicionar Pagamento">
                     <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                     </font>
@@ -57,7 +57,7 @@
                         <DropShadow />
                     </effect>
                 </Button>
-                <Button fx:id="buttonUpdatePayment" layoutX="225.0" layoutY="642.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="173.0" style="-fx-background-radius: 6; -fx-background-color: #f9ff36;" text="Atualizar Pagamento">
+                <Button fx:id="buttonUpdatePayment" layoutX="225.0" layoutY="658.0" mnemonicParsing="false" onAction="#handleUpdatePayment" prefHeight="40.0" prefWidth="173.0" style="-fx-background-radius: 6; -fx-background-color: #f9ff36;" text="Atualizar Pagamento">
                     <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                     </font>
@@ -68,7 +68,7 @@
                         <DropShadow />
                     </effect>
                 </Button>
-                <Button fx:id="buttonDeletePayment" layoutX="418.0" layoutY="642.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="173.0" style="-fx-background-radius: 6; -fx-background-color: #f71a1a;" text="Excluir Pagamento" textFill="WHITE">
+                <Button fx:id="buttonDeletePayment" layoutX="418.0" layoutY="658.0" mnemonicParsing="false" onAction="#handleDeletePayment" prefHeight="40.0" prefWidth="173.0" style="-fx-background-radius: 6; -fx-background-color: #f71a1a;" text="Excluir Pagamento" textFill="WHITE">
                     <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                     </font>
@@ -520,7 +520,7 @@
                         <DropShadow />
                     </effect>
                 </Pane>
-            <TableView fx:id="tablePaymentMulti" layoutX="31.0" layoutY="354.0" prefHeight="268.0" prefWidth="560.0" style="-fx-background-color: #F3F3F3; fx-font-family: 'Segoe UI'; -fx-font-weight: bold; -fx-font-size: 15px;">
+            <TableView fx:id="tablePaymentMulti" layoutX="32.0" layoutY="363.0" prefHeight="268.0" prefWidth="560.0" style="-fx-background-color: #F3F3F3; fx-font-family: 'Segoe UI'; -fx-font-weight: bold; -fx-font-size: 15px;">
                <columns>
                   <TableColumn fx:id="colNameMulti" prefWidth="75.0" text="Nome" />
                </columns>
@@ -531,6 +531,40 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
+            <Label layoutX="198.0" layoutY="49.0" prefHeight="18.0" prefWidth="226.0" style="-fx-background-color: #45B5FF; -fx-border-radius: 8;">
+               <effect>
+                  <InnerShadow>
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                     <input>
+                        <DropShadow />
+                     </input>
+                  </InnerShadow>
+               </effect>
+            </Label>
+            <Label layoutX="209.0" layoutY="49.0" text="Métodos de pagamento à vista">
+               <font>
+                  <Font name="Segoe UI Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="188.0" layoutY="345.0" prefHeight="18.0" prefWidth="248.0" style="-fx-background-color: #45B5FF; -fx-border-radius: 8;">
+               <effect>
+                  <InnerShadow>
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                     <input>
+                        <DropShadow />
+                     </input>
+                  </InnerShadow>
+               </effect>
+            </Label>
+            <Label layoutX="199.0" layoutY="345.0" text="Métodos de pagamento parcelado">
+               <font>
+                  <Font name="Segoe UI Bold" size="14.0" />
+               </font>
+            </Label>
             </children>
         </Pane>
     </children>

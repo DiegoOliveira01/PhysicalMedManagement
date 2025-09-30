@@ -88,10 +88,53 @@ public class PaymentMenuController implements Initializable {
     private ImageView buttonReturnIcon;
     @FXML
     private Button buttonAddPayment;
+    @FXML
+    private Button buttonUpdatePayment;
+    @FXML
+    private Button buttonDeletePayment;
+
     private DbFunctions db = new DbFunctions();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) { // Esse método irá rodar ao iniciar a tela
+        // Para o efeito ao clicar nos botões
+        buttonAddPayment.setOnMousePressed(e ->{
+            buttonAddPayment.setScaleX(0.95);
+            buttonAddPayment.setScaleY(0.95);
+        });
+        buttonAddPayment.setOnMouseReleased(e ->{
+            buttonAddPayment.setScaleX(1);
+            buttonAddPayment.setScaleY(1);
+        });
+        buttonUpdatePayment.setOnMousePressed(e ->{
+            buttonUpdatePayment.setScaleX(0.95);
+            buttonUpdatePayment.setScaleY(0.95);
+        });
+        buttonUpdatePayment.setOnMouseReleased(e ->{
+            buttonUpdatePayment.setScaleX(1);
+            buttonUpdatePayment.setScaleY(1);
+        });
+        buttonDeletePayment.setOnMousePressed(e ->{
+            buttonDeletePayment.setScaleX(0.95);
+            buttonDeletePayment.setScaleY(0.95);
+        });
+        buttonDeletePayment.setOnMouseReleased(e ->{
+            buttonDeletePayment.setScaleX(1);
+            buttonDeletePayment.setScaleY(1);
+        });
+        buttonReturn.setOnMousePressed(e ->{
+            buttonReturn.setScaleX(0.95);
+            buttonReturn.setScaleY(0.95);
+            buttonReturnIcon.setScaleX(0.90);
+            buttonReturnIcon.setScaleY(0.90);
+        });
+        buttonReturn.setOnMouseReleased(e ->{
+            buttonReturn.setScaleX(1);
+            buttonReturn.setScaleY(1);
+            buttonReturnIcon.setScaleX(1);
+            buttonReturnIcon.setScaleY(1);
+        });
+
         colNameSingle.setCellValueFactory(new PropertyValueFactory<>("paymentName"));
         colNameMulti.setCellValueFactory(new PropertyValueFactory<>("paymentName"));
 
@@ -172,6 +215,44 @@ public class PaymentMenuController implements Initializable {
     private void handleAddPayment(){
         Stage currentStage = (Stage) buttonReturn.getScene().getWindow();
         ScreenManager.changeScreen("/com/physicalmed/physicalmedmanagement/payment-add-view.fxml", "Cadastrar Nova Forma De Pagamento", currentStage);
+    }
+
+    @FXML
+    private void handleUpdatePayment(){
+        PaymentSingle paymentSingleSelected = tablePaymentSingle.getSelectionModel().getSelectedItem();
+        PaymentMulti paymentMultiSelected = tablePaymentMulti.getSelectionModel().getSelectedItem();
+
+        if (paymentSingleSelected != null){
+            String paymentName = paymentSingleSelected.getPaymentName();
+
+            SessionManager.getInstance().setPaymentIsSingle(true);
+            SessionManager.getInstance().setPaymentName(paymentName);
+            System.out.println("Item selecionado: " + paymentName);
+
+            Stage currentStage = (Stage) buttonUpdatePayment.getScene().getWindow();
+            ScreenManager.changeScreen("/com/physicalmed/physicalmedmanagement/payment-update-view.fxml", "Atualizar Forma De Pagamento", currentStage);
+        }
+        else if (paymentMultiSelected != null){
+            String paymentName = paymentMultiSelected.getPaymentName();
+
+            SessionManager.getInstance().setPaymentIsSingle(false);
+            SessionManager.getInstance().setPaymentName(paymentName);
+            System.out.println("Item selecionado: " + paymentName);
+
+            Stage currentStage = (Stage) buttonUpdatePayment.getScene().getWindow();
+            ScreenManager.changeScreen("/com/physicalmed/physicalmedmanagement/payment-update-view.fxml", "Atualizar Forma De Pagamento", currentStage);
+        }
+
+        else {
+            System.out.println("Nenhum Item Selecionado");
+        }
+
+    }
+
+    @FXML
+    private void handleDeletePayment(){
+
+
     }
 
     private void disableMultiTaxLabels(){

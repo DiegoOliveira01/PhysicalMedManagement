@@ -4,6 +4,8 @@ public class SessionManager {
 
     private static SessionManager instance;
     private int productId;
+    private Boolean paymentIsSingle;
+    private String paymentName;
 
     private SessionManager() {}
 
@@ -22,4 +24,19 @@ public class SessionManager {
         this.productId = productId;
     }
 
+    public Boolean getPaymentIsSingle() {
+        return paymentIsSingle;
+    }
+
+    public void setPaymentIsSingle(Boolean paymentIsSingle) {
+        this.paymentIsSingle = paymentIsSingle;
+    }
+
+    public String getPaymentName() {
+        return paymentName;
+    }
+
+    public void setPaymentName(String paymentName) {
+        this.paymentName = paymentName;
+    }
 }
