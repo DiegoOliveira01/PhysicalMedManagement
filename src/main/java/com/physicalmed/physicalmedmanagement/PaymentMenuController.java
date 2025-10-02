@@ -1,16 +1,15 @@
 package com.physicalmed.physicalmedmanagement;
 
+import com.physicalmed.physicalmedmanagement.utils.ButtonEffects;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.List;
@@ -98,42 +97,16 @@ public class PaymentMenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) { // Esse método irá rodar ao iniciar a tela
         // Para o efeito ao clicar nos botões
-        buttonAddPayment.setOnMousePressed(e ->{
-            buttonAddPayment.setScaleX(0.95);
-            buttonAddPayment.setScaleY(0.95);
-        });
-        buttonAddPayment.setOnMouseReleased(e ->{
-            buttonAddPayment.setScaleX(1);
-            buttonAddPayment.setScaleY(1);
-        });
-        buttonUpdatePayment.setOnMousePressed(e ->{
-            buttonUpdatePayment.setScaleX(0.95);
-            buttonUpdatePayment.setScaleY(0.95);
-        });
-        buttonUpdatePayment.setOnMouseReleased(e ->{
-            buttonUpdatePayment.setScaleX(1);
-            buttonUpdatePayment.setScaleY(1);
-        });
-        buttonDeletePayment.setOnMousePressed(e ->{
-            buttonDeletePayment.setScaleX(0.95);
-            buttonDeletePayment.setScaleY(0.95);
-        });
-        buttonDeletePayment.setOnMouseReleased(e ->{
-            buttonDeletePayment.setScaleX(1);
-            buttonDeletePayment.setScaleY(1);
-        });
-        buttonReturn.setOnMousePressed(e ->{
-            buttonReturn.setScaleX(0.95);
-            buttonReturn.setScaleY(0.95);
-            buttonReturnIcon.setScaleX(0.90);
-            buttonReturnIcon.setScaleY(0.90);
-        });
-        buttonReturn.setOnMouseReleased(e ->{
-            buttonReturn.setScaleX(1);
-            buttonReturn.setScaleY(1);
-            buttonReturnIcon.setScaleX(1);
-            buttonReturnIcon.setScaleY(1);
-        });
+        ButtonEffects.applyPressEffect(buttonAddPayment, 0.95, 0.95);
+        ButtonEffects.applyPressEffect(buttonUpdatePayment, 0.95, 0.95);
+        ButtonEffects.applyPressEffect(buttonDeletePayment, 0.95, 0.95);
+        ButtonEffects.applyPressEffect(buttonReturn, 0.95, 0.95);
+
+        ButtonEffects.applyHoverEffect(buttonAddPayment, 1.05,1.05);
+        ButtonEffects.applyHoverEffect(buttonUpdatePayment, 1.05,1.05);
+        ButtonEffects.applyHoverEffect(buttonDeletePayment, 1.05,1.05);
+        ButtonEffects.applyHoverEffect(buttonReturn, 1.05,1.05);
+
 
         colNameSingle.setCellValueFactory(new PropertyValueFactory<>("paymentName"));
         colNameMulti.setCellValueFactory(new PropertyValueFactory<>("paymentName"));
@@ -251,7 +224,31 @@ public class PaymentMenuController implements Initializable {
 
     @FXML
     private void handleDeletePayment(){
+        PaymentSingle paymentSingleSelected = tablePaymentSingle.getSelectionModel().getSelectedItem();
+        PaymentMulti paymentMultiSelected = tablePaymentMulti.getSelectionModel().getSelectedItem();
 
+        if (paymentSingleSelected != null){
+            String paymentName = paymentSingleSelected.getPaymentName();
+
+            SessionManager.getInstance().setPaymentName(paymentName);
+            System.out.println("Item selecionado: " + paymentName);
+
+            db.deletePayment(paymentName);
+            loadSinglePayments();
+        }
+        else if (paymentMultiSelected != null){
+            String paymentName = paymentMultiSelected.getPaymentName();
+
+            SessionManager.getInstance().setPaymentName(paymentName);
+            System.out.println("Item selecionado: " + paymentName);
+
+            db.deletePayment(paymentName);
+            loadMultiPayments();
+        }
+
+        else {
+            System.out.println("Nenhum Item Selecionado");
+        }
 
     }
 

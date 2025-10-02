@@ -202,7 +202,26 @@ public class PaymentUpdateController implements Initializable {
 
         }
         else if (paymentIsSingle == false){ // Atualiza a forma de pagamento se for parcelado
+            try {
+                String paymentName = txtName.getText();
+                BigDecimal tax1 = new BigDecimal(txtTax1x.getText().replace(",", "."));
+                BigDecimal tax2 = new BigDecimal(txtTax2x.getText().replace(",", "."));
+                BigDecimal tax3 = new BigDecimal(txtTax3x.getText().replace(",", "."));
+                BigDecimal tax4 = new BigDecimal(txtTax4x.getText().replace(",", "."));
+                BigDecimal tax5 = new BigDecimal(txtTax5x.getText().replace(",", "."));
+                BigDecimal tax6 = new BigDecimal(txtTax6x.getText().replace(",", "."));
+                BigDecimal tax7 = new BigDecimal(txtTax7x.getText().replace(",", "."));
+                BigDecimal tax8 = new BigDecimal(txtTax8x.getText().replace(",", "."));
+                BigDecimal tax9 = new BigDecimal(txtTax9x.getText().replace(",", "."));
+                BigDecimal tax10 = new BigDecimal(txtTax10x.getText().replace(",", "."));
+                BigDecimal tax11 = new BigDecimal(txtTax11x.getText().replace(",", "."));
+                BigDecimal tax12 = new BigDecimal(txtTax12x.getText().replace(",", "."));
+                String oldPaymentName = SessionManager.getInstance().getPaymentName();;
 
+                dbFunctions.updateMultiPayment(paymentName, tax1, tax2, tax3, tax4, tax5, tax6, tax7, tax8, tax9, tax10, tax11, tax12, oldPaymentName);
+            } catch (Exception e){
+                throw new RuntimeException(e);
+            }
         }
 
     }

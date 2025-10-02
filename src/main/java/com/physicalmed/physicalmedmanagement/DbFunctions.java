@@ -4,15 +4,39 @@ import java.math.BigDecimal;
 import java.sql.*;
 import java.util.*;
 
+/**
+ * Classe responsável por realizar operações de acesso ao banco de dados PostgreSQL.
+ * Contém métodos para manipulação de usuários, produtos e formas de pagamento.
+ *
+ * <p>Essa classe atua como camada DAO (Data Access Object), centralizando
+ * a lógica de persistência e consulta de dados no banco.</p>
+ *
+ */
+
 public class DbFunctions {
 
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/physical_med_DB";
     private static final String USER = "postgres";
     private static final String PASSWORD = "8870";
 
+    /**
+     * Obtém uma conexão com o banco de dados.
+     *
+     * @return objeto {@link Connection} ativo
+     * @throws SQLException caso ocorra falha na conexão
+     */
+
     public Connection getConnection() throws SQLException{
         return DriverManager.getConnection(DB_URL, USER, PASSWORD);
     }
+
+    /**
+     * Valida as credenciais de login de um usuário.
+     *
+     * @param login    login do usuário
+     * @param password senha do usuário
+     * @return {@code true} se o usuário existir e as credenciais forem válidas, caso contrário {@code false}
+     */
 
     public boolean validateLogin(String login, String password){
         System.out.println("Validando Login, login: " + login + " Password: " + password);
@@ -34,6 +58,12 @@ public class DbFunctions {
         }
     }
 
+    /**
+     * Recupera os dados do usuário (login, username e role) e inicia a sessão.
+     *
+     * @param login login do usuário
+     */
+
     public void getUserData(String login){
         String query = "SELECT login, username, role FROM users WHERE login = ?";
 
@@ -51,6 +81,13 @@ public class DbFunctions {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Busca um produto pelo seu ID.
+     *
+     * @param productId identificador do produto
+     * @return instância de {@link Product} preenchida ou {@code null} se não encontrado
+     */
 
     public Product getProductById(int productId){
         String query = "SELECT * FROM product WHERE product_id = ?";
@@ -83,6 +120,12 @@ public class DbFunctions {
         return null;
     }
 
+    /**
+     * Lista todos os produtos cadastrados no banco.
+     *
+     * @return lista de {@link Product}
+     */
+
     public List<Product> getAllProducts(){
         List<Product> products = new ArrayList<>();
         String query = "SELECT product_id, product_name, cost, pix_price, credit_price, min_pix_price, min_credit_price, stock, product_image FROM product";
@@ -113,6 +156,12 @@ public class DbFunctions {
         return products;
     }
 
+    /**
+     * Lista todas as formas de pagamento do tipo "single" (sem parcelamento).
+     *
+     * @return lista de {@link PaymentSingle}
+     */
+
     public List<PaymentSingle> getAllSinglePayments(){
         List<PaymentSingle> singlePayments = new ArrayList<>();
         String query = "SELECT payment_id, payment_method, taxes FROM payment WHERE installments = 0";
@@ -135,6 +184,13 @@ public class DbFunctions {
         }
         return singlePayments;
     }
+
+    /**
+     * Lista todas as formas de pagamento do tipo "multi" (com parcelamento).
+     * Os resultados são agrupados por método de pagamento.
+     *
+     * @return lista de {@link PaymentMulti}
+     */
 
     public List<PaymentMulti> getAllMultiPayments() {
         Map<String, PaymentMulti> paymentMap = new HashMap<>(); // key: payment_method (trimmed, kept original case)
@@ -169,6 +225,13 @@ public class DbFunctions {
         return new ArrayList<>(paymentMap.values());
     }
 
+    /**
+     * Busca uma forma de pagamento "single" pelo nome.
+     *
+     * @param paymentName nome do método de pagamento
+     * @return instância de {@link PaymentSingle} ou {@code null} se não encontrada
+     */
+
     public PaymentSingle getSinglePaymentByName(String paymentName){
         String query = "SELECT payment_id, payment_method, taxes FROM payment WHERE payment_method = ? AND installments = 0";
 
@@ -192,6 +255,13 @@ public class DbFunctions {
         return null;
 
     }
+
+    /**
+     * Busca uma forma de pagamento "multi" pelo nome.
+     *
+     * @param paymentName nome do método de pagamento
+     * @return instância de {@link PaymentMulti} ou {@code null} se não encontrada
+     */
 
     public PaymentMulti getMultiPaymentByName(String paymentName){
         String query = "SELECT payment_id, payment_method, installments, taxes FROM payment " +
@@ -228,6 +298,12 @@ public class DbFunctions {
         return null;
     }
 
+    /**
+     * Obtém todos os nomes distintos de métodos de pagamento cadastrados.
+     *
+     * @return lista de nomes de formas de pagamento
+     */
+
     public List<String> getAllPaymentMethods(){ // Pega todos os payment_method e coloca em uma lista, para testar se o nome do payment_method já existe
         List<String> methods = new ArrayList<>();
         String query = "SELECT DISTINCT payment_method FROM payment";
@@ -246,6 +322,20 @@ public class DbFunctions {
 
         return methods;
     }
+
+    /**
+     * Salva um novo produto no banco de dados.
+     *
+     * @param name         nome do produto
+     * @param cost         custo do produto
+     * @param pixPrice     preço à vista (Pix)
+     * @param cardPrice    preço no cartão de crédito
+     * @param minPixPrice  preço mínimo no Pix
+     * @param minCardPrice preço mínimo no cartão
+     * @param stock        quantidade em estoque
+     * @param imageBytes   imagem do produto em bytes
+     * @throws SQLException se ocorrer falha na operação
+     */
 
     public void saveProduct(String name, BigDecimal cost, BigDecimal pixPrice, BigDecimal cardPrice, BigDecimal minPixPrice,
                             BigDecimal minCardPrice, int stock, byte[] imageBytes) throws SQLException{
@@ -268,6 +358,14 @@ public class DbFunctions {
         }
 
     }
+
+    /**
+     * Salva uma nova forma de pagamento do tipo "single".
+     *
+     * @param paymentName nome do método de pagamento
+     * @param installments número de parcelas (deve ser 0)
+     * @param tax taxa aplicada
+     */
 
     public void savePaymentSingleTax(String paymentName, int installments, BigDecimal tax){
         String query = "INSERT INTO payment (payment_method, installments, taxes) VALUES (?, ?, ?)";
@@ -295,6 +393,25 @@ public class DbFunctions {
         }
 
     }
+
+    /**
+     * Salva uma nova forma de pagamento do tipo "multi" (parcelado).
+     * Suporta até 12 parcelas.
+     *
+     * @param paymentName nome do método de pagamento
+     * @param tax1  taxa da 1ª parcela
+     * @param tax2  taxa da 2ª parcela
+     * @param tax3  taxa da 3ª parcela
+     * @param tax4  taxa da 4ª parcela
+     * @param tax5  taxa da 5ª parcela
+     * @param tax6  taxa da 6ª parcela
+     * @param tax7  taxa da 7ª parcela
+     * @param tax8  taxa da 8ª parcela
+     * @param tax9  taxa da 9ª parcela
+     * @param tax10 taxa da 10ª parcela
+     * @param tax11 taxa da 11ª parcela
+     * @param tax12 taxa da 12ª parcela
+     */
 
     public void savePaymentMultiTax(String paymentName, BigDecimal tax1, BigDecimal tax2, BigDecimal tax3,
                                     BigDecimal tax4, BigDecimal tax5, BigDecimal tax6, BigDecimal tax7, BigDecimal tax8,
@@ -332,6 +449,21 @@ public class DbFunctions {
 
     }
 
+    /**
+     * Atualiza os dados de um produto existente.
+     *
+     * @param productId    ID do produto
+     * @param name         novo nome
+     * @param cost         novo custo
+     * @param pixPrice     novo preço Pix
+     * @param cardPrice    novo preço no cartão
+     * @param minPixPrice  novo preço mínimo Pix
+     * @param minCardPrice novo preço mínimo cartão
+     * @param stock        nova quantidade em estoque
+     * @param imageBytes   nova imagem do produto
+     * @throws SQLException se ocorrer erro na atualização
+     */
+
     public void updateProduct(int productId, String name, BigDecimal cost, BigDecimal pixPrice, BigDecimal cardPrice, BigDecimal minPixPrice,
                               BigDecimal minCardPrice, int stock, byte[] imageBytes) throws SQLException{
         String query = "UPDATE product SET product_name = ?, cost = ?, pix_price = ?, credit_price = ?, min_pix_price = ?, " +
@@ -363,6 +495,14 @@ public class DbFunctions {
         }
     }
 
+    /**
+     * Atualiza uma forma de pagamento "single".
+     *
+     * @param paymentName   novo nome
+     * @param tax           nova taxa
+     * @param oldPaymentName nome antigo do método de pagamento
+     */
+
     public void updateSinglePayment(String paymentName, BigDecimal tax, String oldPaymentName){
         String query = "UPDATE payment SET payment_method = ?, taxes = ? WHERE payment_method = ? AND installments = 0";
 
@@ -384,6 +524,7 @@ public class DbFunctions {
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0){
                 System.out.println("Forma de pagamento atualizada com sucesso!");
+                SessionManager.getInstance().setPaymentName(paymentName);
             }
             else{
                 System.out.println("Ocorrey algum erro ao atualizar o método de pagamento");
@@ -392,8 +533,59 @@ public class DbFunctions {
         catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Atualiza uma forma de pagamento "multi".
+     *
+     * @param paymentName   novo nome
+     * @param tax1   taxas de 1x a 12x
+     * @param oldPaymentName nome antigo do método
+     */
+
+    public void updateMultiPayment(String paymentName, BigDecimal tax1, BigDecimal tax2, BigDecimal tax3,
+                                   BigDecimal tax4, BigDecimal tax5, BigDecimal tax6, BigDecimal tax7,
+                                   BigDecimal tax8, BigDecimal tax9, BigDecimal tax10, BigDecimal tax11,
+                                   BigDecimal tax12, String oldPaymentName){
+        String query = "UPDATE payment SET payment_method = ?, taxes = ? WHERE payment_method = ? AND installments = ?";
+
+        DbFunctions dbFunctions = new DbFunctions();
+        List<String> existingMethods = dbFunctions.getAllPaymentMethods();
+
+        if (existingMethods.contains(paymentName) && !Objects.equals(oldPaymentName, paymentName)){
+            System.out.println("O nome dessa forma de pagamento já existe!");
+            return;
+        }
+
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query)){
+
+            BigDecimal[] taxes = {tax1, tax2, tax3, tax4, tax5, tax6, tax7, tax8, tax9, tax10, tax11, tax12};
+
+            for (int i = 0; i < taxes.length; i++){
+                pstmt.setString(1, paymentName);
+                pstmt.setBigDecimal(2, taxes[i]);
+                pstmt.setString(3, oldPaymentName);
+                pstmt.setInt(4, i + 1);
+
+                pstmt.addBatch();
+            }
+
+            SessionManager.getInstance().setPaymentName(paymentName);
+            pstmt.executeBatch();
+            System.out.println("Produto atualizado no banco de dados com sucesso!");
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
 
     }
+
+    /**
+     * Exclui um produto pelo ID.
+     *
+     * @param productId ID do produto a ser excluído
+     */
 
     public void deleteProduct(int productId){
         String query = "DELETE FROM product WHERE product_id = ?";
@@ -417,6 +609,33 @@ public class DbFunctions {
         }
     }
 
+    /**
+     * Exclui uma forma de pagamento pelo nome.
+     *
+     * @param paymentName nome da forma de pagamento
+     */
+
+    public void deletePayment(String paymentName){
+        String query = "DELETE FROM payment WHERE payment_method = ?";
+
+        try (Connection connection = getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(query)){
+
+            pstmt.setString(1, paymentName);
+            int rowsAffected = pstmt.executeUpdate();
+
+            if (rowsAffected > 0){
+                System.out.println("Forma de pagamento Excluido com sucesso");
+            }
+            else {
+                System.out.println("Nenhuma Forma de pagamento foi excluido!");
+            }
+
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 
 
 }

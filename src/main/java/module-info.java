@@ -7,4 +7,6 @@ module com.physicalmed.physicalmedmanagement {
 
     opens com.physicalmed.physicalmedmanagement to javafx.fxml;
     exports com.physicalmed.physicalmedmanagement;
+    exports com.physicalmed.physicalmedmanagement.utils;
+    opens com.physicalmed.physicalmedmanagement.utils to javafx.fxml;
 }
