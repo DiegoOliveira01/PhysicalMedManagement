@@ -323,6 +323,42 @@ public class DbFunctions {
         return methods;
     }
 
+    public List<ChoiceItem> getAllUsers(){
+        List<ChoiceItem> sellers = new ArrayList<>();
+        String query = "SELECT userid, username FROM users";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                sellers.add(new ChoiceItem(rs.getInt("userid"), rs.getString("username")));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sellers;
+    }
+
+    public List<ChoiceItem> getAllProductItems() {
+        List<ChoiceItem> products = new ArrayList<>();
+        String query = "SELECT product_id, product_name FROM product";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                products.add(new ChoiceItem(rs.getInt("product_id"), rs.getString("product_name")));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
+
     /**
      * Salva um novo produto no banco de dados.
      *

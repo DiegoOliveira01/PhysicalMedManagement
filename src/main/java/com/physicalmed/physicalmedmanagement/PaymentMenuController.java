@@ -101,11 +101,7 @@ public class PaymentMenuController implements Initializable {
         ButtonEffects.applyPressEffect(buttonUpdatePayment, 0.95, 0.95);
         ButtonEffects.applyPressEffect(buttonDeletePayment, 0.95, 0.95);
         ButtonEffects.applyPressEffect(buttonReturn, 0.95, 0.95);
-
-        ButtonEffects.applyHoverEffect(buttonAddPayment, 1.05,1.05);
-        ButtonEffects.applyHoverEffect(buttonUpdatePayment, 1.05,1.05);
-        ButtonEffects.applyHoverEffect(buttonDeletePayment, 1.05,1.05);
-        ButtonEffects.applyHoverEffect(buttonReturn, 1.05,1.05);
+        applyEffects(); // Aplica efeitos em labels e buttons
 
 
         colNameSingle.setCellValueFactory(new PropertyValueFactory<>("paymentName"));
@@ -310,4 +306,23 @@ public class PaymentMenuController implements Initializable {
         labelTax12.setVisible(true);
     }
 
+    private void applyEffects(){
+        Label[] labelItens = new Label[]{
+                labelTax, labelTax1, labelTax2, labelTax3, labelTax4, labelTax5, labelTax6,
+                labelTax7, labelTax8, labelTax9, labelTax10, labelTax11, labelTax12,
+                labelForTax, labelForTax1, labelForTax2, labelForTax3, labelForTax4, labelForTax5,
+                labelForTax6, labelForTax7, labelForTax8, labelForTax9, labelForTax10, labelForTax11, labelForTax12,
+                labelPaymentName, labelPaymentDivisible
+        };
+        for (Label label : labelItens){
+            ButtonEffects.applyHoverEffect(label, 1.01, 1.01);
+        }
+
+        Button[] buttonItens = new Button[]{
+                buttonAddPayment, buttonUpdatePayment, buttonDeletePayment, buttonReturn
+        };
+        for (Button button : buttonItens){
+            ButtonEffects.applyHoverEffect(button, 1.01, 1.01);
+        }
+    }
 }
