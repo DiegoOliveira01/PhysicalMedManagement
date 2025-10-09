@@ -11,7 +11,11 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.awt.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class SaleAddController implements Initializable {
@@ -47,6 +51,7 @@ public class SaleAddController implements Initializable {
         choiceBoxPaymentMethod.setStyle("-fx-font-family: 'Segoe UI';" + "-fx-font-size: 14px;");
         datePickerSaleDate.setStyle("-fx-font-family: 'Segoe UI';" + "-fx-font-size: 14px;" + "-fx-text-fill: #333333;");
 
+        setDateFormat();
         populateChoiceBox();
     }
 
@@ -80,22 +85,106 @@ public class SaleAddController implements Initializable {
         ChoiceItem selectedSeller = choiceBoxSeller.getValue();
         ChoiceItem selectProduct = choiceBoxProduct.getValue();
         ChoiceItemPayment selectPayment = choiceBoxPaymentMethod.getValue();
+        String selectedInstallment = choiceBoxInstallments.getValue();
+        var saleDate = datePickerSaleDate.getValue();
+        String priceText = txtSellPrice.getText();
+
+        if (selectedSeller == null || selectProduct == null || selectPayment == null || saleDate == null || priceText.isEmpty()){
+            System.out.println("Preencha todos os campos antes de prosseguir!");
+            return;
+        }
+
+        if (selectPayment.getType().equals("MULTI") && selectedInstallment == null){
+            System.out.println("Preencha o campo de parcelas!");
+            return;
+        }
+
         System.out.println("Vendedor Selecionado: " + selectedSeller);
         System.out.println("Produto Selecionado: " + selectProduct);
         System.out.println("Forma de Pagamento: " + selectPayment);
+        System.out.println("Parcela Selecionado: " + selectedInstallment);
 
         int sellerId = selectedSeller.getId();
         int productId = selectProduct.getId();
         String paymentMethod = selectPayment.getName();
+        int installment;
+        String status = "PENDENTE";
+        if (selectedInstallment == null){
+            installment = 1;
+        }
+        else {
+            installment = Integer.parseInt(selectedInstallment);
+        }
+
+        BigDecimal subtotal = new BigDecimal(priceText.replace(",", "."));
+        BigDecimal total = calculateTotalPrice(subtotal, selectPayment, installment);
+
+        /*
+        if (selectPayment.getType().equals("MULTI")) {
+            System.out.println("Pagamento Parcelado");
+            PaymentMulti paymentMulti = dbFunctions.getMultiPaymentByName(selectPayment.getName());
+            BigDecimal tax = paymentMulti.getTaxForInstallment(installment);
+            if (tax != null) {
+                total = subtotal.add(subtotal.multiply(tax.divide(BigDecimal.valueOf(100))));
+            }
+        }
+        if (!selectPayment.getType().equals("MULTI")) {
+            System.out.println("Pagamento À vista");
+            PaymentSingle paymentSingle = dbFunctions.getSinglePaymentByName(selectPayment.getName());
+            BigDecimal tax = paymentSingle.getTax();
+            if (tax != null) {
+                total = subtotal.add(subtotal.multiply(tax.divide(BigDecimal.valueOf(100))));
+            }
+        }
+
+         */
+
         System.out.println("Id do vendedor: " + sellerId);
         System.out.println("Id do produto: " + productId);
         System.out.println("Payment Method: " + paymentMethod);
+        System.out.println("Quant. parcelas: " + installment);
+        System.out.println("Data final: " + saleDate);
+        System.out.println("Valor: " + total);
+
+        try {
+            dbFunctions.saveSale(sellerId, productId, status, saleDate.toString(), paymentMethod, subtotal, total);
+            System.out.println("Indo salvar o produto na DB");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
     private void handleReturn(){
         Stage currentStage = (Stage) buttonReturn.getScene().getWindow();
         ScreenManager.changeScreen("/com/physicalmed/physicalmedmanagement/admin-screen-view.fxml", "Tela Principal", currentStage);
+    }
+
+    private void setDateFormat() {
+        datePickerSaleDate.setConverter(new javafx.util.StringConverter<>() {
+            private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+            @Override
+            public String toString(LocalDate date) {
+                if (date != null) {
+                    return dateFormatter.format(date);
+                } else {
+                    return "";
+                }
+            }
+
+            @Override
+            public LocalDate fromString(String string) {
+                if (string != null && !string.isEmpty()) {
+                    return LocalDate.parse(string, dateFormatter);
+                } else {
+                    return null;
+                }
+            }
+        });
+
+        // Define o promptText (texto de exemplo) para o formato brasileiro
+        datePickerSaleDate.setPromptText("dd/MM/aaaa");
     }
 
     private void handlePaymentSelection() {
@@ -118,10 +207,44 @@ public class SaleAddController implements Initializable {
             PaymentMulti paymentMulti = dbFunctions.getMultiPaymentByName(selected.getName());
             if (paymentMulti != null) {
                 for (Integer installment : paymentMulti.getInstallmentTaxes().keySet()) {
-                    choiceBoxInstallments.getItems().add(installment + "x");
+                    choiceBoxInstallments.getItems().add(String.valueOf(installment));
                 }
             }
         }
+    }
+
+    private BigDecimal calculateTotalPrice(BigDecimal basePrice, ChoiceItemPayment payment, int installments) {
+        try {
+            if (!payment.getType().equals("MULTI")) {
+                System.out.println("Pagamento À vista");
+                // Para pagamentos à vista
+                PaymentSingle singlePayment = dbFunctions.getSinglePaymentByName(payment.getName());
+                if (singlePayment != null && singlePayment.getTax() != null) {
+                    BigDecimal tax = singlePayment.getTax();
+                    // CORREÇÃO: converte de percentual para fração
+                    BigDecimal taxFraction = tax.divide(BigDecimal.valueOf(100));
+                    basePrice = basePrice.multiply(BigDecimal.ONE.subtract(taxFraction));
+                    return basePrice = basePrice.setScale(2, RoundingMode.HALF_UP);
+                }
+            } else {
+                // Para pagamentos parcelados
+                System.out.println("Pagamento Parcelado");
+                PaymentMulti multiPayment = dbFunctions.getMultiPaymentByName(payment.getName());
+                if (multiPayment != null) {
+                    BigDecimal tax = multiPayment.getInstallmentTaxes().get(installments);
+                    if (tax != null) {
+                        BigDecimal taxFraction = tax.divide(BigDecimal.valueOf(100));
+                        basePrice = basePrice.multiply(BigDecimal.ONE.subtract(taxFraction));
+                        return basePrice = basePrice.setScale(2, RoundingMode.HALF_UP);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Retorna o preço base se não encontrar taxa
+        return basePrice;
     }
 
     private void applyNumericCommaMask(TextField textField){

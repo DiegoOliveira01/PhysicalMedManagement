@@ -485,6 +485,30 @@ public class DbFunctions {
 
     }
 
+    public void saveSale(int sellerId, int productId, String status, String saleDate,
+                         String paymentMethod, BigDecimal subtotal, BigDecimal total) {
+        String query = "INSERT INTO sale (seller_id, product_id, status, sale_date, payment_method, subtotal, total) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)){
+
+            pstmt.setInt(1, sellerId);
+            pstmt.setInt(2, productId);
+            pstmt.setString(3, status);
+            pstmt.setString(4, saleDate);
+            pstmt.setString(5, paymentMethod);
+            pstmt.setBigDecimal(6, subtotal);
+            pstmt.setBigDecimal(7, total);
+
+            pstmt.executeUpdate();
+
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Atualiza os dados de um produto existente.
      *
