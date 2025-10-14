@@ -359,6 +359,63 @@ public class DbFunctions {
         return products;
     }
 
+    public List<Sale> getAllSales(){
+        List<Sale> sales = new ArrayList<>();
+        String query = "SELECT sale_id, seller_id, product_id, status, sale_date, " +
+                "payment_method, subtotal, total FROM sale";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+
+
+            while (rs.next()){
+                Sale s = new Sale();
+                s.setSaleId(rs.getInt("sale_id"));
+                s.setSellerId(rs.getInt("seller_id"));
+                s.setProductId(rs.getInt("product_id"));
+                System.out.println(s.getProductId());
+                int saleProductId = s.getProductId();
+                s.setProductName(getProductNameById(saleProductId));
+                s.setStatus(rs.getString("status"));
+                s.setSaleDate(rs.getString("sale_date"));
+                s.setPaymentMethod(rs.getString("payment_method"));
+                s.setSubTotal(rs.getBigDecimal("subtotal"));
+                s.setTotal(rs.getBigDecimal("total"));
+
+                sales.add(s);
+            }
+
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return sales;
+    }
+
+    public String getProductNameById(int productId) {
+        String query = "SELECT product_name FROM product WHERE product_id = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, productId);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("product_name");
+                } else {
+                    System.out.println("Produto não encontrado para ID: " + productId);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar nome do produto ID " + productId + ": " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     /**
      * Salva um novo produto no banco de dados.
      *
