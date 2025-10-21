@@ -376,7 +376,9 @@ public class DbFunctions {
                 s.setProductId(rs.getInt("product_id"));
                 System.out.println(s.getProductId());
                 int saleProductId = s.getProductId();
+                int saleSellerId = s.getSellerId();
                 s.setProductName(getProductNameById(saleProductId));
+                s.setSellerName(getSellerNameById(saleSellerId));
                 s.setStatus(rs.getString("status"));
                 s.setSaleDate(rs.getString("sale_date"));
                 s.setPaymentMethod(rs.getString("payment_method"));
@@ -411,6 +413,29 @@ public class DbFunctions {
 
         } catch (SQLException e) {
             System.err.println("Erro ao buscar nome do produto ID " + productId + ": " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String getSellerNameById(int sellerId) {
+        String query = "SELECT username FROM users WHERE userid = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, sellerId);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("username");
+                } else {
+                    System.out.println("Usuario não encontrado para ID: " + sellerId);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar nome do usuario ID " + sellerId + ": " + e.getMessage());
             e.printStackTrace();
         }
         return null;

@@ -14,6 +14,7 @@ public class Sale {
     private BigDecimal total;
 
     private String productName;
+    private String sellerName;
 
     public int getSaleId() {
         return saleId;
@@ -85,5 +86,13 @@ public class Sale {
 
     public void setProductName(String productName) {
         this.productName = productName;
+    }
+
+    public String getSellerName() {
+        return sellerName;
+    }
+
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
     }
 }

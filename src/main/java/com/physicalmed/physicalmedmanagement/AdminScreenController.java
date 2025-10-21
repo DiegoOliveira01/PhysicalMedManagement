@@ -62,7 +62,7 @@ public class AdminScreenController implements Initializable {
         colProductName.setCellValueFactory(new PropertyValueFactory<>("productName"));
         colSaleSubtotal.setCellValueFactory(new PropertyValueFactory<>("subTotal"));
         colSalePrice.setCellValueFactory(new PropertyValueFactory<>("total"));
-        colSellerName.setCellValueFactory(new PropertyValueFactory<>("sellerId"));
+        colSellerName.setCellValueFactory(new PropertyValueFactory<>("sellerName"));
         colSaleDate.setCellValueFactory(new PropertyValueFactory<>("saleDate"));
         colSaleStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
@@ -133,10 +133,6 @@ public class AdminScreenController implements Initializable {
 
         ObservableList<Sale> observableList = FXCollections.observableArrayList(sales);
         tableSales.setItems(observableList);
-    }
-
-    public void getProductName(){
-
     }
 
     public void startSaleAdd(){
