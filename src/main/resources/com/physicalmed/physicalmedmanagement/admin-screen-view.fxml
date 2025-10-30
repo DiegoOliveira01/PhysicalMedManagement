@@ -79,7 +79,7 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <Pane layoutX="27.0" layoutY="584.0" prefHeight="61.0" prefWidth="353.0" style="-fx-border-color: #F3F3F3; -fx-border-radius: 8; -fx-border-width: 2;">
+            <Pane layoutX="27.0" layoutY="584.0" prefHeight="61.0" prefWidth="450.0" style="-fx-border-color: #F3F3F3; -fx-border-radius: 8; -fx-border-width: 2;">
                <effect>
                   <DropShadow>
                      <color>
@@ -88,7 +88,7 @@
                   </DropShadow>
                </effect>
                <children>
-                  <Button fx:id="buttonAddSale" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#startSaleAdd" prefHeight="40.0" prefWidth="155.0" style="-fx-background-radius: 6; -fx-background-color: #34EB2E;" text="Adicionar">
+                  <Button fx:id="buttonAddSale" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#startSaleAdd" prefHeight="40.0" prefWidth="123.0" style="-fx-background-radius: 6; -fx-background-color: #34EB2E;" text="Adicionar">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>
@@ -96,7 +96,15 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="buttonManageSale" layoutX="184.0" layoutY="11.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="155.0" style="-fx-background-radius: 6; -fx-background-color: #f9ff36;" text="Modificar">
+                  <Button fx:id="buttonManageSale" layoutX="164.0" layoutY="11.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="123.0" style="-fx-background-radius: 6; -fx-background-color: #f9ff36;" text="Modificar">
+                     <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="buttonDeleteSale" layoutX="313.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleDeleteSale" prefHeight="40.0" prefWidth="123.0" style="-fx-background-radius: 6; -fx-background-color: #f71a1a;" text="Excluir" textFill="WHITE">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>
@@ -153,6 +161,11 @@
                   <DropShadow />
                </effect>
             </Button>
+            <Label fx:id="labelDateError" alignment="CENTER" contentDisplay="CENTER" layoutX="719.0" layoutY="18.0" prefHeight="19.0" prefWidth="282.0" textFill="RED">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>

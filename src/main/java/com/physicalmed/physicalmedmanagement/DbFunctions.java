@@ -441,6 +441,119 @@ public class DbFunctions {
         return null;
     }
 
+    public List<Sale> getSalesByDateRange(String fromDate, String toDate){
+        List<Sale> sales = new ArrayList<>();
+
+        String query = "SELECT sale_id, seller_id, product_id, status, sale_date, " +
+                "payment_method, subtotal, total FROM sale " +
+                "WHERE sale_date BETWEEN ? AND ? " +
+                "ORDER BY sale_date DESC";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, fromDate);
+            pstmt.setString(2, toDate);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Sale s = new Sale();
+                s.setSaleId(rs.getInt("sale_id"));
+                s.setSellerId(rs.getInt("seller_id"));
+                s.setProductId(rs.getInt("product_id"));
+
+                int saleProductId = s.getProductId();
+                int saleSellerId = s.getSellerId();
+                s.setProductName(getProductNameById(saleProductId));
+                s.setSellerName(getSellerNameById(saleSellerId));
+                s.setStatus(rs.getString("status"));
+                s.setSaleDate(rs.getString("sale_date"));
+                s.setPaymentMethod(rs.getString("payment_method"));
+                s.setSubTotal(rs.getBigDecimal("subtotal"));
+                s.setTotal(rs.getBigDecimal("total"));
+
+                sales.add(s);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sales;
+    }
+
+    public List<Sale> getSalesOfToday() {
+        List<Sale> sales = new ArrayList<>();
+        String query = "SELECT sale_id, seller_id, product_id, status, sale_date, " +
+                "payment_method, subtotal, total FROM sale " +
+                "WHERE sale_date::date = CURRENT_DATE " +
+                "ORDER BY sale_date DESC";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                Sale s = new Sale();
+                s.setSaleId(rs.getInt("sale_id"));
+                s.setSellerId(rs.getInt("seller_id"));
+                s.setProductId(rs.getInt("product_id"));
+
+                int saleProductId = s.getProductId();
+                int saleSellerId = s.getSellerId();
+                s.setProductName(getProductNameById(saleProductId));
+                s.setSellerName(getSellerNameById(saleSellerId));
+                s.setStatus(rs.getString("status"));
+                s.setSaleDate(rs.getString("sale_date"));
+                s.setPaymentMethod(rs.getString("payment_method"));
+                s.setSubTotal(rs.getBigDecimal("subtotal"));
+                s.setTotal(rs.getBigDecimal("total"));
+
+                sales.add(s);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sales;
+    }
+
+    public List<Sale> getPendingSales() {
+        List<Sale> sales = new ArrayList<>();
+        String query = "SELECT sale_id, seller_id, product_id, status, sale_date, " +
+                "payment_method, subtotal, total FROM sale " +
+                "WHERE status = 'PENDENTE' " +
+                "ORDER BY sale_date DESC";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                Sale s = new Sale();
+                s.setSaleId(rs.getInt("sale_id"));
+                s.setSellerId(rs.getInt("seller_id"));
+                s.setProductId(rs.getInt("product_id"));
+
+                int saleProductId = s.getProductId();
+                int saleSellerId = s.getSellerId();
+                s.setProductName(getProductNameById(saleProductId));
+                s.setSellerName(getSellerNameById(saleSellerId));
+                s.setStatus(rs.getString("status"));
+                s.setSaleDate(rs.getString("sale_date"));
+                s.setPaymentMethod(rs.getString("payment_method"));
+                s.setSubTotal(rs.getBigDecimal("subtotal"));
+                s.setTotal(rs.getBigDecimal("total"));
+
+                sales.add(s);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sales;
+    }
+
     /**
      * Salva um novo produto no banco de dados.
      *
@@ -771,6 +884,28 @@ public class DbFunctions {
             }
             else {
                 System.out.println("Nenhuma Forma de pagamento foi excluido!");
+            }
+
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteSale(int saleId){
+        String query = "DELETE FROM sale WHERE sale_id = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)){
+
+            pstmt.setInt(1, saleId);
+            int rowsAffected = pstmt.executeUpdate();
+
+            if (rowsAffected > 0){
+                System.out.println("Venda Excluida com sucesso");
+            }
+            else {
+                System.out.println("Nenhuma Venda foi excluida!");
             }
 
         }
