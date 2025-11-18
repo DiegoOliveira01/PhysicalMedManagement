@@ -1,5 +1,6 @@
 package com.physicalmed.physicalmedmanagement;
 
+import com.physicalmed.physicalmedmanagement.utils.AlertUtils;
 import com.physicalmed.physicalmedmanagement.utils.ButtonEffects;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -60,7 +61,8 @@ public class AdminScreenController implements Initializable {
 
     private final DecimalFormat moneyFormat = new DecimalFormat("R$ #,##0.00"); // Para formatção dos preços
     private DbFunctions db = new DbFunctions();
-    private boolean initializing = true; // Flag para controlar a inicialização
+    private boolean initializing = true; // ‘Flag’ para controlar a inicialização
+    private boolean suppressFilters = false; // 'Flag' para evitar recursão
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
@@ -124,10 +126,18 @@ public class AdminScreenController implements Initializable {
             }
         });
 
-        datePickerFrom.valueProperty().addListener((observableValue, oldValue, newValue) -> applyDateFilter());
-        datePickerTo.valueProperty().addListener((observableValue, oldValue, newValue) -> applyDateFilter());
+        datePickerFrom.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (!suppressFilters) {
+                applyDateFilter();
+            }
+        });
+        datePickerTo.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (!suppressFilters) {
+                applyDateFilter();
+            }
+        });
         choiceBoxSale.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (!initializing) { // Só executa se não estiver na inicialização
+            if (!initializing && !suppressFilters) { // Só executa se não estiver na inicialização
                 applyChoiceBoxFilter();
             }
         });
@@ -143,8 +153,12 @@ public class AdminScreenController implements Initializable {
                 "Vendas pendentes",
                 "Todas as vendas"
         );
-        // Define o valor padrão
+
+        // Define o valor padrão usando suppress para evitar disparo
+        suppressFilters = true;
         choiceBoxSale.setValue("Todas as vendas");
+        suppressFilters = false;
+
         initializing = false; // Finaliza a inicialização
     }
 
@@ -162,15 +176,28 @@ public class AdminScreenController implements Initializable {
     }
 
     public void handleDeleteSale(){
-        int saleId = tableSales.getSelectionModel().getSelectedItem().getSaleId();
-        db.deleteSale(saleId);
+        Sale selectedSale = tableSales.getSelectionModel().getSelectedItem();
 
-        loadSales();
+        if (selectedSale == null) {
+            AlertUtils.showWarning("Aviso", "Selecione uma venda para excluir.");
+            return;
+        }
+
+        boolean confirmed = AlertUtils.showConfirmation("Confirmação", "Deseja realmente excluir esta venda?");
+        if (confirmed) {
+            db.deleteSale(selectedSale.getSaleId());
+            AlertUtils.showInfo("Sucesso", "Venda excluída com sucesso!");
+            loadSales();
+        }
     }
 
     public void applyDateFilter(){
+        System.out.println("Iniciando applyDateFilter");
+
+        suppressFilters = true;
         // Reseta a ChoiceBox quando usar filtro de data
         choiceBoxSale.setValue("Todas as vendas");
+        suppressFilters = false;
 
         LocalDate fromDate = datePickerFrom.getValue();
         LocalDate toDate = datePickerTo.getValue();
@@ -179,11 +206,13 @@ public class AdminScreenController implements Initializable {
         if (fromDate != null && toDate != null) {
             // Garantir que a data final seja maior ou igual à data inicial
             if (!fromDate.isAfter(toDate)) {
+                System.out.println("Tudo ok com datas");
                 loadSalesByDateRange(fromDate.toString(), toDate.toString());
                 labelDateError.setText("");
             } else {
                 // Mostrar mensagem de erro se datas estiverem invertidas
-                showAlert("Erro", "A data final deve ser maior ou igual à data inicial.");
+                System.out.println("datas erradas");
+                AlertUtils.showWarning("Erro", "A data final deve ser maior ou igual à data inicial");
                 labelDateError.setText("Preencha as datas corretamente");
             }
         } else if (fromDate != null || toDate != null) {
@@ -192,6 +221,7 @@ public class AdminScreenController implements Initializable {
             labelDateError.setText("Preencha ambos as datas para filtrar");
         } else {
             // Se nenhum campo está preenchido, carrega todas as vendas
+            System.out.println("Nenhuma data, selecionada carregando tudo");
             labelDateError.setText("");
             loadSales();
         }
@@ -199,24 +229,33 @@ public class AdminScreenController implements Initializable {
 
     // Filtro por ChoiceBox
     public void applyChoiceBoxFilter(){
+        System.out.println("Iniciando applyChoiceBoxFilter");
         // Reseta os DatePickers quando usar filtro da ChoiceBox
+
+        suppressFilters = true;
         datePickerFrom.setValue(null);
         datePickerTo.setValue(null);
+        suppressFilters = false;
+
         labelDateError.setText("");
 
         String selectedOption = choiceBoxSale.getValue();
         if (selectedOption != null) {
             switch (selectedOption) {
                 case "Vendas do dia":
+                    System.out.println("Case Vendas do dia");
                     loadSalesOfToday();
                     break;
                 case "Vendas pendentes":
+                    System.out.println("Case Vendas pendentes");
                     loadPendingSales();
                     break;
                 case "Todas as vendas":
+                    System.out.println("Case todas as vendas");
                     loadSales();
                     break;
                 default:
+                    System.out.println("Case default");
                     loadSales();
                     break;
             }
@@ -243,15 +282,6 @@ public class AdminScreenController implements Initializable {
         List<Sale> sales = db.getPendingSales();
         ObservableList<Sale> observableList = FXCollections.observableArrayList(sales);
         tableSales.setItems(observableList);
-    }
-
-    // Método auxiliar para mostrar alertas
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
     public void startProductMenu(){

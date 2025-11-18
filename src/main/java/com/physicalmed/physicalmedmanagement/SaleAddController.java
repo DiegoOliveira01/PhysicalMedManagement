@@ -2,20 +2,27 @@ package com.physicalmed.physicalmedmanagement;
 
 import com.physicalmed.physicalmedmanagement.utils.ButtonEffects;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import javafx.scene.image.ImageView;
 import java.awt.*;
+import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class SaleAddController implements Initializable {
@@ -25,11 +32,25 @@ public class SaleAddController implements Initializable {
     @FXML
     private ChoiceBox<ChoiceItem> choiceBoxProduct;
     @FXML
+    private Label labelPix;
+    @FXML
+    private Label labelPixDiscount;
+    @FXML
+    private Label labelCredit;
+    @FXML
+    private Label labelCreditDiscount;
+    @FXML
+    private Label labelStock;
+    @FXML
+    private ImageView imageViewProduct;
+    @FXML
     private ChoiceBox<ChoiceItemPayment> choiceBoxPaymentMethod;
     @FXML
     private ChoiceBox<String> choiceBoxInstallments;
     @FXML
     private Label labelInstallments;
+    @FXML
+    private Label labelError;
     @FXML
     private DatePicker datePickerSaleDate;
     @FXML
@@ -41,6 +62,8 @@ public class SaleAddController implements Initializable {
     @FXML
     private Button buttonCancel;
     private DbFunctions dbFunctions = new DbFunctions();
+    private final DecimalFormat moneyFormat = new DecimalFormat("R$ #,##0.00"); // Para formatção dos preços
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -53,6 +76,7 @@ public class SaleAddController implements Initializable {
 
         setDateFormat();
         populateChoiceBox();
+
     }
 
     private void populateChoiceBox(){
@@ -62,6 +86,14 @@ public class SaleAddController implements Initializable {
 
         // Preenche vendedores
         choiceBoxSeller.getItems().addAll(db.getAllUsers());
+
+        choiceBoxProduct.setOnAction(event -> {
+            ChoiceItem selected = choiceBoxProduct.getValue();
+            if (selected != null){
+                Product product = dbFunctions.getProductById(selected.getId());
+                populateProductLabel(product);
+            }
+        });
 
         // Preenche formas de pagamento
         for (PaymentSingle single : db.getAllSinglePayments()) {
@@ -80,6 +112,35 @@ public class SaleAddController implements Initializable {
         choiceBoxPaymentMethod.setOnAction(e -> handlePaymentSelection());
     }
 
+    private void populateProductLabel(Product product){
+        if (product == null) return;
+
+        labelPix.setText(moneyFormat.format(product.getPixPrice()));
+        labelPixDiscount.setText(moneyFormat.format(product.getPixPriceDiscount()));
+        labelCredit.setText(moneyFormat.format(product.getCreditPrice()));
+        labelCreditDiscount.setText(moneyFormat.format(product.getCreditPriceDiscount()));
+        labelStock.setText(String.valueOf(product.getStock()));
+
+        int currentStock = product.getStock();
+        // Se o estoque estiver abaixo de 5 avisa
+        if (currentStock <= 4) {
+            labelError.setText("O estoque deste produto está baixo: " + currentStock + " unidade(s).");
+        }
+        else {
+            labelError.setText("");
+        }
+
+        if (product.getProductImage() != null){
+            javafx.scene.image.Image img = new javafx.scene.image.Image(new ByteArrayInputStream(product.getProductImage()));
+            imageViewProduct.setImage(img);
+        }
+        else {
+            imageViewProduct.setImage(new Image(getClass().getResourceAsStream("/com/physicalmed/physicalmedmanagement/images/fundo_salvar_imagem.png")));
+        }
+
+
+    }
+
     @FXML
     private void handleSaveSale(){
         ChoiceItem selectedSeller = choiceBoxSeller.getValue();
@@ -88,6 +149,7 @@ public class SaleAddController implements Initializable {
         String selectedInstallment = choiceBoxInstallments.getValue();
         var saleDate = datePickerSaleDate.getValue();
         String priceText = txtSellPrice.getText();
+
 
         if (selectedSeller == null || selectProduct == null || selectPayment == null || saleDate == null || priceText.isEmpty()){
             System.out.println("Preencha todos os campos antes de prosseguir!");
@@ -196,12 +258,12 @@ public class SaleAddController implements Initializable {
 
         if (selected.getType().equals("SINGLE")) {
             // Se for pagamento à vista
-            choiceBoxInstallments.setVisible(false);
-            labelInstallments.setVisible(false);
+            choiceBoxInstallments.setDisable(true);
+            labelInstallments.setDisable(true);
         } else {
             // Pagamento parcelado
-            choiceBoxInstallments.setVisible(true);
-            labelInstallments.setVisible(true);
+            choiceBoxInstallments.setDisable(false);
+            labelInstallments.setDisable(false);
 
             // Busca o PaymentMulti com base no nome
             PaymentMulti paymentMulti = dbFunctions.getMultiPaymentByName(selected.getName());
