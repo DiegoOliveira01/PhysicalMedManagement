@@ -1,5 +1,6 @@
 package com.physicalmed.physicalmedmanagement;
 
+import com.physicalmed.physicalmedmanagement.utils.AlertUtils;
 import com.physicalmed.physicalmedmanagement.utils.ButtonEffects;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -149,17 +150,40 @@ public class SaleAddController implements Initializable {
         String selectedInstallment = choiceBoxInstallments.getValue();
         var saleDate = datePickerSaleDate.getValue();
         String priceText = txtSellPrice.getText();
-
+        String pixMinPriceText = labelPixDiscount.getText();
+        String creditMinPriceText = labelCreditDiscount.getText();
 
         if (selectedSeller == null || selectProduct == null || selectPayment == null || saleDate == null || priceText.isEmpty()){
             System.out.println("Preencha todos os campos antes de prosseguir!");
+            AlertUtils.showWarning("Aviso!", "Preencha todos os campos antes de prosseguir!");
             return;
         }
 
+        // Inicar variaveis para verificação de valor mínimo após checar se não são NULL
+        BigDecimal sellValue = new BigDecimal(priceText.replace(".", "").replace(",", ".").trim());
+        BigDecimal pixMinPrice = new BigDecimal(pixMinPriceText.replace("R$", "").replace(".", "").replace(",", ".").trim());
+        BigDecimal creditMinPrice = new BigDecimal(creditMinPriceText.replace("R$", "").replace(".", "").replace(",", ".").trim());
+
         if (selectPayment.getType().equals("MULTI") && selectedInstallment == null){
             System.out.println("Preencha o campo de parcelas!");
+            AlertUtils.showWarning("Aviso!", "Preencha o campo de parcelas!");
             return;
         }
+
+        if (selectPayment.getType().equals("MULTI")){
+            if (sellValue.compareTo(creditMinPrice) < 0){
+                AlertUtils.showError("Error no valor!", "O valor da venda é menor que o preço mínimo do produto!");
+                return;
+            }
+        }
+        else {
+            if (sellValue.compareTo(pixMinPrice) < 0) {
+                AlertUtils.showError("Error no valor!", "O valor da venda é menor que o preço mínimo do produto!");
+                return;
+            }
+        }
+
+
 
         System.out.println("Vendedor Selecionado: " + selectedSeller);
         System.out.println("Produto Selecionado: " + selectProduct);
