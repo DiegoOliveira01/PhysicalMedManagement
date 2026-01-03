@@ -15,9 +15,9 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="768.0" maxWidth="1366.0" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.physicalmed.physicalmedmanagement.PaymentMenuController">
+<AnchorPane maxHeight="720.0" maxWidth="1280.0" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.physicalmed.physicalmedmanagement.PaymentMenuController">
     <children>
-        <ImageView fitHeight="768.0" fitWidth="1366.0" pickOnBounds="true">
+        <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true">
             <image>
                 <Image url="@images/Fundo_Gradiente.png" />
             </image>
@@ -25,17 +25,17 @@
                 <InnerShadow />
             </effect>
         </ImageView>
-        <Pane layoutX="24.0" layoutY="21.0" prefHeight="726.0" prefWidth="1320.0" style="-fx-background-color: #ffffff;">
+        <Pane layoutX="16.0" layoutY="16.0" prefHeight="688.0" prefWidth="1249.0" style="-fx-background-color: #ffffff;">
             <effect>
                 <DropShadow />
             </effect>
             <children>
-                <Label alignment="CENTER" prefHeight="36.0" prefWidth="1320.0" style="-fx-background-color: #23A5E1;" text="Menu De Formas De Pagamento">
+                <Label alignment="CENTER" prefHeight="36.0" prefWidth="1249.0" style="-fx-background-color: #23A5E1;" text="Menu De Formas De Pagamento">
                     <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                     </font>
                 </Label>
-                <TableView fx:id="tablePaymentSingle" layoutX="31.0" layoutY="67.0" prefHeight="268.0" prefWidth="560.0" style="-fx-background-color: #F3F3F3; fx-font-family: 'Segoe UI'; -fx-font-weight: bold; -fx-font-size: 15px;">
+                <TableView fx:id="tablePaymentSingle" layoutX="14.0" layoutY="74.0" prefHeight="245.0" prefWidth="560.0" style="-fx-background-color: #F3F3F3; fx-font-family: 'Segoe UI'; -fx-font-weight: bold; -fx-font-size: 15px;">
                     <columns>
                         <TableColumn fx:id="colNameSingle" prefWidth="75.0" text="Nome" />
                     </columns>
@@ -46,7 +46,7 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                     </columnResizePolicy>
                 </TableView>
-                <Button fx:id="buttonAddPayment" layoutX="31.0" layoutY="658.0" mnemonicParsing="false" onAction="#handleAddPayment" prefHeight="40.0" prefWidth="173.0" style="-fx-background-radius: 6; -fx-background-color: #34EB2E;" text="Adicionar Pagamento">
+                <Button fx:id="buttonAddPayment" layoutX="14.0" layoutY="628.0" mnemonicParsing="false" onAction="#handleAddPayment" prefHeight="40.0" prefWidth="173.0" style="-fx-background-radius: 6; -fx-background-color: #34EB2E;" text="Adicionar Pagamento">
                     <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                     </font>
@@ -57,7 +57,7 @@
                         <DropShadow />
                     </effect>
                 </Button>
-                <Button fx:id="buttonUpdatePayment" layoutX="225.0" layoutY="658.0" mnemonicParsing="false" onAction="#handleUpdatePayment" prefHeight="40.0" prefWidth="173.0" style="-fx-background-radius: 6; -fx-background-color: #f9ff36;" text="Atualizar Pagamento">
+                <Button fx:id="buttonUpdatePayment" layoutX="209.0" layoutY="628.0" mnemonicParsing="false" onAction="#handleUpdatePayment" prefHeight="40.0" prefWidth="173.0" style="-fx-background-radius: 6; -fx-background-color: #f9ff36;" text="Atualizar Pagamento">
                     <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                     </font>
@@ -68,7 +68,7 @@
                         <DropShadow />
                     </effect>
                 </Button>
-                <Button fx:id="buttonDeletePayment" layoutX="418.0" layoutY="658.0" mnemonicParsing="false" onAction="#handleDeletePayment" prefHeight="40.0" prefWidth="173.0" style="-fx-background-radius: 6; -fx-background-color: #f71a1a;" text="Excluir Pagamento" textFill="WHITE">
+                <Button fx:id="buttonDeletePayment" layoutX="401.0" layoutY="628.0" mnemonicParsing="false" onAction="#handleDeletePayment" prefHeight="40.0" prefWidth="173.0" style="-fx-background-radius: 6; -fx-background-color: #f71a1a;" text="Excluir Pagamento" textFill="WHITE">
                     <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                     </font>
@@ -79,7 +79,7 @@
                         <DropShadow />
                     </effect>
                 </Button>
-                <Button fx:id="buttonReturn" alignment="CENTER_RIGHT" layoutX="1214.0" layoutY="4.0" mnemonicParsing="false" onAction="#handleReturn" prefHeight="19.0" prefWidth="92.0" style="-fx-background-radius: 6; -fx-background-color: #f71a1a;" text="Voltar  " textFill="WHITE">
+                <Button fx:id="buttonReturn" alignment="CENTER_RIGHT" layoutX="1148.0" layoutY="3.0" mnemonicParsing="false" onAction="#handleReturn" prefHeight="19.0" prefWidth="92.0" style="-fx-background-radius: 6; -fx-background-color: #f71a1a;" text="Voltar  " textFill="WHITE">
                     <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                     </font>
@@ -87,7 +87,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <ImageView fx:id="buttonReturnIcon" fitHeight="23.0" fitWidth="46.0" layoutX="1210.0" layoutY="6.0" onMouseClicked="#handleReturn" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="buttonReturnIcon" fitHeight="23.0" fitWidth="46.0" layoutX="1144.0" layoutY="5.0" onMouseClicked="#handleReturn" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@images/voltar.png" />
                     </image>
@@ -95,9 +95,9 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </ImageView>
-                <Pane layoutX="614.0" layoutY="67.0" prefHeight="631.0" prefWidth="684.0" style="-fx-background-color: #ffffff; -fx-background-radius: 12;">
+                <Pane layoutX="591.0" layoutY="50.0" prefHeight="619.0" prefWidth="636.0" style="-fx-background-color: #ffffff; -fx-background-radius: 12;">
                     <children>
-                        <Label layoutY="20.0" prefHeight="25.0" prefWidth="684.0" style="-fx-background-color: #45B5FF;">
+                        <Label layoutY="20.0" prefHeight="25.0" prefWidth="636.0" style="-fx-background-color: #45B5FF;">
                             <effect>
                                 <InnerShadow>
                                     <color>
@@ -106,12 +106,12 @@
                                 </InnerShadow>
                             </effect>
                         </Label>
-                        <Label alignment="CENTER" layoutX="219.0" layoutY="20.0" text="Dados das formas de pagamento">
+                        <Label alignment="CENTER" layoutX="194.0" layoutY="20.0" text="Dados das formas de pagamento">
                             <font>
                                 <Font name="System Bold" size="16.0" />
                             </font>
                         </Label>
-                        <Label fx:id="labelPaymentName" alignment="CENTER" layoutX="162.0" layoutY="103.0" prefHeight="36.0" prefWidth="362.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
+                        <Label fx:id="labelPaymentName" alignment="CENTER" layoutX="138.0" layoutY="103.0" prefHeight="36.0" prefWidth="362.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
                             <font>
                                 <Font name="Segoe UI Bold" size="16.0" />
                             </font>
@@ -129,7 +129,7 @@
                                 <Insets left="10.0" right="10.0" />
                             </padding>
                         </Label>
-                        <Label alignment="CENTER" layoutX="241.0" layoutY="63.0" prefHeight="23.0" prefWidth="203.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="Forma de pagamento:">
+                        <Label alignment="CENTER" layoutX="217.0" layoutY="63.0" prefHeight="23.0" prefWidth="203.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="Forma de pagamento:">
                             <font>
                                 <Font name="Segoe UI Bold" size="16.0" />
                             </font>
@@ -137,7 +137,7 @@
                                 <DropShadow />
                             </effect>
                         </Label>
-                        <Label fx:id="labelPaymentDivisible" alignment="CENTER" layoutX="162.0" layoutY="203.0" prefHeight="36.0" prefWidth="362.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
+                        <Label fx:id="labelPaymentDivisible" alignment="CENTER" layoutX="138.0" layoutY="202.0" prefHeight="36.0" prefWidth="362.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
                             <font>
                                 <Font name="Segoe UI Bold" size="16.0" />
                             </font>
@@ -155,7 +155,7 @@
                                 <Insets left="10.0" right="10.0" />
                             </padding>
                         </Label>
-                        <Label alignment="CENTER" layoutX="238.0" layoutY="165.0" prefHeight="23.0" prefWidth="209.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="Possibilita parcelamento?">
+                        <Label alignment="CENTER" layoutX="215.0" layoutY="166.0" prefHeight="23.0" prefWidth="209.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="Possibilita parcelamento?">
                             <font>
                                 <Font name="Segoe UI Bold" size="16.0" />
                             </font>
@@ -163,7 +163,7 @@
                                 <DropShadow />
                             </effect>
                         </Label>
-                  <Label layoutY="255.0" prefHeight="25.0" prefWidth="684.0" style="-fx-background-color: #45B5FF;">
+                  <Label layoutY="255.0" prefHeight="25.0" prefWidth="636.0" style="-fx-background-color: #45B5FF;">
                      <effect>
                         <InnerShadow>
                            <color>
@@ -172,7 +172,7 @@
                         </InnerShadow>
                      </effect>
                   </Label>
-                  <Label alignment="CENTER" layoutX="283.0" layoutY="255.0" text="Taxas Bancarias">
+                  <Label alignment="CENTER" layoutX="260.0" layoutY="255.0" text="Taxas Bancarias">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -203,7 +203,7 @@
                         <DropShadow />
                      </effect>
                   </Label>
-                  <Label fx:id="labelTax1" alignment="CENTER" contentDisplay="CENTER" layoutX="52.0" layoutY="320.0" prefHeight="36.0" prefWidth="118.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
+                  <Label fx:id="labelTax1" alignment="CENTER" contentDisplay="CENTER" layoutX="53.0" layoutY="326.0" prefHeight="36.0" prefWidth="118.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
@@ -221,7 +221,7 @@
                         <Insets left="10.0" right="10.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="labelForTax1" alignment="CENTER" layoutX="51.0" layoutY="297.0" prefHeight="23.0" prefWidth="118.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="1x">
+                  <Label fx:id="labelForTax1" alignment="CENTER" layoutX="52.0" layoutY="303.0" prefHeight="23.0" prefWidth="118.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="1x">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
@@ -229,7 +229,7 @@
                         <DropShadow />
                      </effect>
                   </Label>
-                  <Label fx:id="labelTax2" alignment="CENTER" contentDisplay="CENTER" layoutX="287.0" layoutY="320.0" prefHeight="36.0" prefWidth="118.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
+                  <Label fx:id="labelTax2" alignment="CENTER" contentDisplay="CENTER" layoutX="261.0" layoutY="326.0" prefHeight="36.0" prefWidth="118.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
@@ -247,7 +247,7 @@
                         <Insets left="10.0" right="10.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="labelForTax2" alignment="CENTER" layoutX="286.0" layoutY="297.0" prefHeight="23.0" prefWidth="118.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="2x">
+                  <Label fx:id="labelForTax2" alignment="CENTER" layoutX="260.0" layoutY="303.0" prefHeight="23.0" prefWidth="118.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="2x">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
@@ -255,7 +255,7 @@
                         <DropShadow />
                      </effect>
                   </Label>
-                  <Label fx:id="labelTax3" alignment="CENTER" contentDisplay="CENTER" layoutX="526.0" layoutY="320.0" prefHeight="36.0" prefWidth="118.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
+                  <Label fx:id="labelTax3" alignment="CENTER" contentDisplay="CENTER" layoutX="467.0" layoutY="326.0" prefHeight="36.0" prefWidth="118.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
@@ -273,7 +273,7 @@
                         <Insets left="10.0" right="10.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="labelForTax3" alignment="CENTER" layoutX="525.0" layoutY="297.0" prefHeight="23.0" prefWidth="118.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="3x">
+                  <Label fx:id="labelForTax3" alignment="CENTER" layoutX="466.0" layoutY="303.0" prefHeight="23.0" prefWidth="118.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="3x">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
@@ -281,7 +281,7 @@
                         <DropShadow />
                      </effect>
                   </Label>
-                  <Label fx:id="labelTax4" alignment="CENTER" contentDisplay="CENTER" layoutX="52.0" layoutY="403.0" prefHeight="36.0" prefWidth="118.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
+                  <Label fx:id="labelTax4" alignment="CENTER" contentDisplay="CENTER" layoutX="53.0" layoutY="407.0" prefHeight="36.0" prefWidth="118.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
@@ -299,7 +299,7 @@
                         <Insets left="10.0" right="10.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="labelForTax4" alignment="CENTER" layoutX="51.0" layoutY="380.0" prefHeight="23.0" prefWidth="118.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="4x">
+                  <Label fx:id="labelForTax4" alignment="CENTER" layoutX="52.0" layoutY="384.0" prefHeight="23.0" prefWidth="118.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="4x">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
@@ -307,7 +307,7 @@
                         <DropShadow />
                      </effect>
                   </Label>
-                  <Label fx:id="labelTax5" alignment="CENTER" contentDisplay="CENTER" layoutX="287.0" layoutY="403.0" prefHeight="36.0" prefWidth="118.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
+                  <Label fx:id="labelTax5" alignment="CENTER" contentDisplay="CENTER" layoutX="261.0" layoutY="407.0" prefHeight="36.0" prefWidth="118.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
@@ -325,7 +325,7 @@
                         <Insets left="10.0" right="10.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="labelForTax5" alignment="CENTER" layoutX="286.0" layoutY="380.0" prefHeight="23.0" prefWidth="118.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="5x">
+                  <Label fx:id="labelForTax5" alignment="CENTER" layoutX="260.0" layoutY="384.0" prefHeight="23.0" prefWidth="118.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="5x">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
@@ -333,7 +333,7 @@
                         <DropShadow />
                      </effect>
                   </Label>
-                  <Label fx:id="labelTax6" alignment="CENTER" contentDisplay="CENTER" layoutX="526.0" layoutY="403.0" prefHeight="36.0" prefWidth="118.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
+                  <Label fx:id="labelTax6" alignment="CENTER" contentDisplay="CENTER" layoutX="465.0" layoutY="407.0" prefHeight="36.0" prefWidth="118.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
@@ -351,7 +351,7 @@
                         <Insets left="10.0" right="10.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="labelForTax6" alignment="CENTER" layoutX="525.0" layoutY="380.0" prefHeight="23.0" prefWidth="118.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="6x">
+                  <Label fx:id="labelForTax6" alignment="CENTER" layoutX="464.0" layoutY="384.0" prefHeight="23.0" prefWidth="118.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="6x">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
@@ -359,7 +359,7 @@
                         <DropShadow />
                      </effect>
                   </Label>
-                  <Label fx:id="labelTax7" alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="483.0" prefHeight="36.0" prefWidth="118.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
+                  <Label fx:id="labelTax7" alignment="CENTER" contentDisplay="CENTER" layoutX="53.0" layoutY="488.0" prefHeight="36.0" prefWidth="118.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
@@ -377,7 +377,7 @@
                         <Insets left="10.0" right="10.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="labelForTax7" alignment="CENTER" layoutX="50.0" layoutY="460.0" prefHeight="23.0" prefWidth="118.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="7x">
+                  <Label fx:id="labelForTax7" alignment="CENTER" layoutX="52.0" layoutY="465.0" prefHeight="23.0" prefWidth="118.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="7x">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
@@ -385,7 +385,7 @@
                         <DropShadow />
                      </effect>
                   </Label>
-                  <Label fx:id="labelTax8" alignment="CENTER" contentDisplay="CENTER" layoutX="286.0" layoutY="483.0" prefHeight="36.0" prefWidth="118.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
+                  <Label fx:id="labelTax8" alignment="CENTER" contentDisplay="CENTER" layoutX="260.0" layoutY="488.0" prefHeight="36.0" prefWidth="118.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
@@ -403,7 +403,7 @@
                         <Insets left="10.0" right="10.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="labelForTax8" alignment="CENTER" layoutX="285.0" layoutY="460.0" prefHeight="23.0" prefWidth="118.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="8x">
+                  <Label fx:id="labelForTax8" alignment="CENTER" layoutX="259.0" layoutY="465.0" prefHeight="23.0" prefWidth="118.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="8x">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
@@ -411,7 +411,7 @@
                         <DropShadow />
                      </effect>
                   </Label>
-                  <Label fx:id="labelTax9" alignment="CENTER" contentDisplay="CENTER" layoutX="525.0" layoutY="483.0" prefHeight="36.0" prefWidth="118.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
+                  <Label fx:id="labelTax9" alignment="CENTER" contentDisplay="CENTER" layoutX="465.0" layoutY="488.0" prefHeight="36.0" prefWidth="118.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
@@ -429,7 +429,7 @@
                         <Insets left="10.0" right="10.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="labelForTax9" alignment="CENTER" layoutX="524.0" layoutY="460.0" prefHeight="23.0" prefWidth="118.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="9x">
+                  <Label fx:id="labelForTax9" alignment="CENTER" layoutX="464.0" layoutY="465.0" prefHeight="23.0" prefWidth="118.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="9x">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
@@ -437,7 +437,7 @@
                         <DropShadow />
                      </effect>
                   </Label>
-                  <Label fx:id="labelTax10" alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="565.0" prefHeight="36.0" prefWidth="118.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
+                  <Label fx:id="labelTax10" alignment="CENTER" contentDisplay="CENTER" layoutX="55.0" layoutY="566.0" prefHeight="36.0" prefWidth="118.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
@@ -455,7 +455,7 @@
                         <Insets left="10.0" right="10.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="labelForTax10" alignment="CENTER" layoutX="50.0" layoutY="542.0" prefHeight="23.0" prefWidth="118.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="10x">
+                  <Label fx:id="labelForTax10" alignment="CENTER" layoutX="54.0" layoutY="543.0" prefHeight="23.0" prefWidth="118.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="10x">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
@@ -463,7 +463,7 @@
                         <DropShadow />
                      </effect>
                   </Label>
-                  <Label fx:id="labelTax11" alignment="CENTER" contentDisplay="CENTER" layoutX="286.0" layoutY="565.0" prefHeight="36.0" prefWidth="118.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
+                  <Label fx:id="labelTax11" alignment="CENTER" contentDisplay="CENTER" layoutX="262.0" layoutY="566.0" prefHeight="36.0" prefWidth="118.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
@@ -481,7 +481,7 @@
                         <Insets left="10.0" right="10.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="labelForTax11" alignment="CENTER" layoutX="285.0" layoutY="542.0" prefHeight="23.0" prefWidth="118.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="11x">
+                  <Label fx:id="labelForTax11" alignment="CENTER" layoutX="261.0" layoutY="543.0" prefHeight="23.0" prefWidth="118.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="11x">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
@@ -489,7 +489,7 @@
                         <DropShadow />
                      </effect>
                   </Label>
-                  <Label fx:id="labelTax12" alignment="CENTER" contentDisplay="CENTER" layoutX="525.0" layoutY="565.0" prefHeight="36.0" prefWidth="118.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
+                  <Label fx:id="labelTax12" alignment="CENTER" contentDisplay="CENTER" layoutX="467.0" layoutY="566.0" prefHeight="36.0" prefWidth="118.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um meio de pagamento da tabela" textAlignment="JUSTIFY" wrapText="true">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
@@ -507,7 +507,7 @@
                         <Insets left="10.0" right="10.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="labelForTax12" alignment="CENTER" layoutX="524.0" layoutY="542.0" prefHeight="23.0" prefWidth="118.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="12x">
+                  <Label fx:id="labelForTax12" alignment="CENTER" layoutX="466.0" layoutY="543.0" prefHeight="23.0" prefWidth="118.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="12x">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
@@ -520,7 +520,7 @@
                         <DropShadow />
                     </effect>
                 </Pane>
-            <TableView fx:id="tablePaymentMulti" layoutX="32.0" layoutY="363.0" prefHeight="268.0" prefWidth="560.0" style="-fx-background-color: #F3F3F3; fx-font-family: 'Segoe UI'; -fx-font-weight: bold; -fx-font-size: 15px;">
+            <TableView fx:id="tablePaymentMulti" layoutX="14.0" layoutY="353.0" prefHeight="245.0" prefWidth="560.0" style="-fx-background-color: #F3F3F3; fx-font-family: 'Segoe UI'; -fx-font-weight: bold; -fx-font-size: 15px;">
                <columns>
                   <TableColumn fx:id="colNameMulti" prefWidth="75.0" text="Nome" />
                </columns>
@@ -531,7 +531,7 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <Label layoutX="198.0" layoutY="49.0" prefHeight="18.0" prefWidth="226.0" style="-fx-background-color: #45B5FF; -fx-border-radius: 8;">
+            <Label layoutX="184.0" layoutY="62.0" prefHeight="18.0" prefWidth="226.0" style="-fx-background-color: #45B5FF; -fx-border-radius: 8;">
                <effect>
                   <InnerShadow>
                      <color>
@@ -543,12 +543,12 @@
                   </InnerShadow>
                </effect>
             </Label>
-            <Label layoutX="209.0" layoutY="49.0" text="Métodos de pagamento à vista">
+            <Label layoutX="195.0" layoutY="62.0" text="Métodos de pagamento à vista">
                <font>
                   <Font name="Segoe UI Bold" size="14.0" />
                </font>
             </Label>
-            <Label layoutX="188.0" layoutY="345.0" prefHeight="18.0" prefWidth="248.0" style="-fx-background-color: #45B5FF; -fx-border-radius: 8;">
+            <Label layoutX="175.0" layoutY="341.0" prefHeight="18.0" prefWidth="248.0" style="-fx-background-color: #45B5FF; -fx-border-radius: 8;">
                <effect>
                   <InnerShadow>
                      <color>
@@ -560,7 +560,7 @@
                   </InnerShadow>
                </effect>
             </Label>
-            <Label layoutX="199.0" layoutY="345.0" text="Métodos de pagamento parcelado">
+            <Label layoutX="186.0" layoutY="341.0" text="Métodos de pagamento parcelado">
                <font>
                   <Font name="Segoe UI Bold" size="14.0" />
                </font>

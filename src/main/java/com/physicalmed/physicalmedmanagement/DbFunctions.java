@@ -1,5 +1,6 @@
 package com.physicalmed.physicalmedmanagement;
 
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.*;
@@ -15,9 +16,40 @@ import java.util.*;
 
 public class DbFunctions {
 
+    /*
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/physical_med_DB";
     private static final String USER = "postgres";
     private static final String PASSWORD = "8870";
+    */
+
+
+    private static final String DB_URL;
+    private static final String USER;
+    private static final String PASSWORD;
+
+    static {
+        try (InputStream input =
+                     DbFunctions.class
+                             .getClassLoader()
+                             .getResourceAsStream("database.properties")) {
+
+            if (input == null) {
+                throw new RuntimeException("Arquivo database.properties não encontrado em resources");
+            }
+
+            Properties props = new Properties();
+            props.load(input);
+
+            DB_URL = props.getProperty("db.url");
+            USER = props.getProperty("db.user");
+            PASSWORD = props.getProperty("db.password");
+
+        } catch (Exception e) {
+            throw new ExceptionInInitializerError(
+                    "Erro ao carregar configurações do banco: " + e.getMessage()
+            );
+        }
+    }
 
     /**
      * Obtém uma conexão com o banco de dados.
