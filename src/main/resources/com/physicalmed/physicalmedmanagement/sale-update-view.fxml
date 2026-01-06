@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="742.0" maxWidth="980.0" prefHeight="742.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.physicalmed.physicalmedmanagement.SaleUpdateController">
+    <children>
+        <ImageView fitHeight="742.0" fitWidth="980.0" pickOnBounds="true">
+            <image>
+                <Image url="@images/Fundo_Gradiente.png" />
+            </image>
+            <effect>
+                <InnerShadow />
+            </effect>
+        </ImageView>
+        <Pane layoutX="19.0" layoutY="21.0" prefHeight="702.0" prefWidth="945.0" style="-fx-background-color: #ffffff;">
+            <effect>
+                <DropShadow />
+            </effect>
+            <children>
+                <Label alignment="CENTER" prefHeight="36.0" prefWidth="945.0" style="-fx-background-color: #23A5E1;" text="Modificar Venda" textAlignment="JUSTIFY" wrapText="true">
+                    <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="txtSubtotalSellPrice" layoutX="283.0" layoutY="590.0" prefHeight="40.0" prefWidth="203.0" promptText="Digite o valor" style="-fx-background-radius: 6; -fx-border-color: #ffffff; -fx-border-radius: 8; -fx-background-color: #EFF9FD;">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                    <effect>
+                        <DropShadow />
+                    </effect>
+                    <padding>
+                        <Insets left="26.0" />
+                    </padding>
+                </TextField>
+                <Button fx:id="buttonUpdateSale" layoutX="751.0" layoutY="492.0" mnemonicParsing="false" onAction="#handleUpdateSale" prefHeight="40.0" prefWidth="155.0" style="-fx-background-radius: 6; -fx-background-color: #34EB2E;" text="Atualizar venda">
+                    <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <effect>
+                        <DropShadow />
+                    </effect>
+                </Button>
+                <Button fx:id="buttonCancel" layoutX="751.0" layoutY="589.0" mnemonicParsing="false" onAction="#handleReturn" prefHeight="40.0" prefWidth="155.0" style="-fx-background-radius: 6; -fx-background-color: #6898FF;" text="Cancelar">
+                    <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <effect>
+                        <DropShadow />
+                    </effect>
+                </Button>
+                <Label fx:id="labelError" alignment="CENTER" contentDisplay="CENTER" layoutX="732.0" layoutY="421.0" prefHeight="52.0" prefWidth="194.0" textAlignment="JUSTIFY" textFill="RED" textOverrun="CLIP" wrapText="true">
+                    <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                    </font>
+                </Label>
+                <DatePicker fx:id="datePickerSaleDate" layoutX="309.0" layoutY="477.0" prefHeight="36.0" prefWidth="147.0" promptText="dd/mm/aaaa" style="-fx-background-radius: 6; -fx-background-color: #EFF9FD;">
+                    <effect>
+                        <DropShadow />
+                    </effect>
+                </DatePicker>
+                <Button fx:id="buttonReturn" alignment="CENTER_RIGHT" layoutX="843.0" layoutY="3.0" mnemonicParsing="false" onAction="#handleReturn" prefHeight="19.0" prefWidth="92.0" style="-fx-background-radius: 6; -fx-background-color: #f71a1a;" text="Voltar  " textFill="WHITE">
+                    <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+                <ImageView fx:id="buttonReturnIcon" fitHeight="23.0" fitWidth="46.0" layoutX="837.0" layoutY="6.0" onMouseClicked="#handleReturn" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/voltar.png" />
+                    </image>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </ImageView>
+                <Label alignment="CENTER" layoutX="36.0" layoutY="442.0" prefHeight="23.0" prefWidth="203.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="Vendedor">
+                    <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                    </font>
+                    <effect>
+                        <DropShadow />
+                    </effect>
+                </Label>
+                <Label alignment="CENTER" layoutX="26.0" layoutY="534.0" prefHeight="23.0" prefWidth="223.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="Forma de pagamento">
+                    <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                    </font>
+                    <effect>
+                        <DropShadow />
+                    </effect>
+                </Label>
+                <Label alignment="CENTER" layoutX="309.0" layoutY="442.0" prefHeight="23.0" prefWidth="147.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="Selecione a data">
+                    <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                    </font>
+                    <effect>
+                        <DropShadow />
+                    </effect>
+                </Label>
+                <Label alignment="CENTER" layoutX="283.0" layoutY="554.0" prefHeight="23.0" prefWidth="203.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="Valor de venda SubTotal">
+                    <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                    </font>
+                    <effect>
+                        <DropShadow />
+                    </effect>
+                </Label>
+                <Label alignment="CENTER" layoutX="285.0" layoutY="601.0" prefHeight="19.0" prefWidth="24.0" text="R$">
+                    <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                    </font>
+                </Label>
+                <Pane layoutX="21.0" layoutY="58.0" prefHeight="353.0" prefWidth="905.0" style="-fx-background-color: #EBEBEB;">
+                    <children>
+                        <Label alignment="CENTER" layoutX="94.0" layoutY="54.0" prefHeight="23.0" prefWidth="203.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="Produto">
+                            <font>
+                                <Font name="Segoe UI Bold" size="16.0" />
+                            </font>
+                            <effect>
+                                <DropShadow />
+                            </effect>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="409.0" layoutY="54.0" prefHeight="23.0" prefWidth="203.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="Preço padrão PIX">
+                            <font>
+                                <Font name="Segoe UI Bold" size="16.0" />
+                            </font>
+                            <effect>
+                                <DropShadow />
+                            </effect>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="658.0" layoutY="54.0" prefHeight="23.0" prefWidth="203.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="Preço padrão crédito">
+                            <font>
+                                <Font name="Segoe UI Bold" size="16.0" />
+                            </font>
+                            <effect>
+                                <DropShadow />
+                            </effect>
+                        </Label>
+                        <Label layoutY="8.0" prefHeight="25.0" prefWidth="905.0" style="-fx-background-color: #D0D0D0;">
+                            <effect>
+                                <InnerShadow>
+                                    <color>
+                                        <Color red="1.0" green="1.0" blue="1.0" />
+                                    </color>
+                                </InnerShadow>
+                            </effect>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="384.0" layoutY="8.0" text="Dados do produto">
+                            <font>
+                                <Font name="System Bold" size="16.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="labelPix" alignment="CENTER" layoutX="409.0" layoutY="88.0" prefHeight="36.0" prefWidth="203.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um produto..." textAlignment="JUSTIFY" wrapText="true">
+                            <font>
+                                <Font name="Segoe UI Bold" size="16.0" />
+                            </font>
+                            <effect>
+                                <DropShadow>
+                                    <color>
+                                        <Color opacity="0.6030534505844116" />
+                                    </color>
+                                </DropShadow>
+                            </effect>
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                            <padding>
+                                <Insets left="10.0" right="10.0" />
+                            </padding>
+                        </Label>
+                        <Label fx:id="labelCredit" alignment="CENTER" layoutX="658.0" layoutY="88.0" prefHeight="36.0" prefWidth="203.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um produto..." textAlignment="JUSTIFY" wrapText="true">
+                            <font>
+                                <Font name="Segoe UI Bold" size="16.0" />
+                            </font>
+                            <effect>
+                                <DropShadow>
+                                    <color>
+                                        <Color opacity="0.6030534505844116" />
+                                    </color>
+                                </DropShadow>
+                            </effect>
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                            <padding>
+                                <Insets left="10.0" right="10.0" />
+                            </padding>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="409.0" layoutY="148.0" prefHeight="23.0" prefWidth="203.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="Preço mínimo PIX">
+                            <font>
+                                <Font name="Segoe UI Bold" size="16.0" />
+                            </font>
+                            <effect>
+                                <DropShadow />
+                            </effect>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="658.0" layoutY="148.0" prefHeight="23.0" prefWidth="203.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="Preço mínimo crédito">
+                            <font>
+                                <Font name="Segoe UI Bold" size="16.0" />
+                            </font>
+                            <effect>
+                                <DropShadow />
+                            </effect>
+                        </Label>
+                        <Label fx:id="labelPixDiscount" alignment="CENTER" layoutX="409.0" layoutY="182.0" prefHeight="36.0" prefWidth="203.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um produto..." textAlignment="JUSTIFY" wrapText="true">
+                            <font>
+                                <Font name="Segoe UI Bold" size="16.0" />
+                            </font>
+                            <effect>
+                                <DropShadow>
+                                    <color>
+                                        <Color opacity="0.6030534505844116" />
+                                    </color>
+                                </DropShadow>
+                            </effect>
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                            <padding>
+                                <Insets left="10.0" right="10.0" />
+                            </padding>
+                        </Label>
+                        <Label fx:id="labelCreditDiscount" alignment="CENTER" layoutX="658.0" layoutY="182.0" prefHeight="36.0" prefWidth="203.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um produto..." textAlignment="JUSTIFY" wrapText="true">
+                            <font>
+                                <Font name="Segoe UI Bold" size="16.0" />
+                            </font>
+                            <effect>
+                                <DropShadow>
+                                    <color>
+                                        <Color opacity="0.6030534505844116" />
+                                    </color>
+                                </DropShadow>
+                            </effect>
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                            <padding>
+                                <Insets left="10.0" right="10.0" />
+                            </padding>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="536.0" layoutY="244.0" prefHeight="23.0" prefWidth="203.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="Estoque atual">
+                            <font>
+                                <Font name="Segoe UI Bold" size="16.0" />
+                            </font>
+                            <effect>
+                                <DropShadow />
+                            </effect>
+                        </Label>
+                        <Label fx:id="labelStock" alignment="CENTER" layoutX="536.0" layoutY="278.0" prefHeight="36.0" prefWidth="203.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Selecione um produto..." textAlignment="JUSTIFY" wrapText="true">
+                            <font>
+                                <Font name="Segoe UI Bold" size="16.0" />
+                            </font>
+                            <effect>
+                                <DropShadow>
+                                    <color>
+                                        <Color opacity="0.6030534505844116" />
+                                    </color>
+                                </DropShadow>
+                            </effect>
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                            <padding>
+                                <Insets left="10.0" right="10.0" />
+                            </padding>
+                        </Label>
+                        <StackPane alignment="CENTER" layoutX="14.0" layoutY="131.0" prefHeight="208.0" prefWidth="362.0">
+                            <children>
+                                <ImageView fx:id="imageViewProduct" fitHeight="181.0" fitWidth="350.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@images/fundo_salvar_imagem.png" />
+                                    </image>
+                                </ImageView>
+                            </children>
+                        </StackPane>
+                  <Label fx:id="labelProductName" alignment="CENTER" layoutX="94.0" layoutY="88.0" prefHeight="36.0" prefWidth="203.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Nome do produto" textAlignment="JUSTIFY" wrapText="true">
+                     <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                     </font>
+                     <effect>
+                        <DropShadow>
+                           <color>
+                              <Color opacity="0.6030534505844116" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </Label>
+                    </children>
+                    <effect>
+                        <DropShadow />
+                    </effect>
+                </Pane>
+                <Label fx:id="labelInstallments" alignment="CENTER" layoutX="26.0" layoutY="642.0" prefHeight="23.0" prefWidth="103.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="Parcelas">
+                    <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                    </font>
+                    <effect>
+                        <DropShadow />
+                    </effect>
+                </Label>
+                <ChoiceBox fx:id="choiceBoxInstallments" disable="true" layoutX="146.0" layoutY="636.0" prefHeight="36.0" prefWidth="103.0" style="-fx-background-radius: 6; -fx-background-color: #EFF9FD;">
+                    <effect>
+                        <DropShadow />
+                    </effect>
+                </ChoiceBox>
+            <Label fx:id="labelSellerName" alignment="CENTER" layoutX="36.0" layoutY="476.0" prefHeight="36.0" prefWidth="203.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Nome do vendedor" textAlignment="JUSTIFY" wrapText="true">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0" />
+               </font>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color opacity="0.6030534505844116" />
+                     </color>
+                  </DropShadow>
+               </effect>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </Label>
+            <Label fx:id="labelPaymentMethod" alignment="CENTER" layoutX="26.0" layoutY="570.0" prefHeight="36.0" prefWidth="223.0" style="-fx-border-color: #000000; -fx-border-radius: 6; -fx-background-radius: 6; -fx-background-color: #EFF9FD;" text="Forma de pagamento" textAlignment="JUSTIFY" wrapText="true">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0" />
+               </font>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color opacity="0.6030534505844116" />
+                     </color>
+                  </DropShadow>
+               </effect>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="txtTotalSellPrice" layoutX="510.0" layoutY="590.0" prefHeight="40.0" prefWidth="203.0" promptText="Digite o valor" style="-fx-background-radius: 6; -fx-border-color: #ffffff; -fx-border-radius: 8; -fx-background-color: #EFF9FD;">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+               <padding>
+                  <Insets left="26.0" />
+               </padding>
+            </TextField>
+            <Label alignment="CENTER" layoutX="510.0" layoutY="601.0" prefHeight="19.0" prefWidth="24.0" text="R$">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="510.0" layoutY="554.0" prefHeight="23.0" prefWidth="203.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="Valor de venda Total">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Label>
+            <Label alignment="CENTER" layoutX="538.0" layoutY="442.0" prefHeight="23.0" prefWidth="147.0" style="-fx-background-color: #45B5FF; -fx-background-radius: 6;" text="Selecione o Status">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Label>
+            <ChoiceBox fx:id="choiceBoxStatus" layoutX="538.0" layoutY="477.0" prefHeight="36.0" prefWidth="147.0" style="-fx-background-radius: 6; -fx-background-color: #EFF9FD;">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </ChoiceBox>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

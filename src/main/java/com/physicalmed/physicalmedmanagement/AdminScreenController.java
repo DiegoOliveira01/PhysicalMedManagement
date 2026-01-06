@@ -175,6 +175,21 @@ public class AdminScreenController implements Initializable {
         ScreenManager.changeScreen("/com/physicalmed/physicalmedmanagement/sale-add-view.fxml", "Cadastrar Venda", currentStage);
     }
 
+    public void startSaleUpdate(){
+        Sale selectedSale = tableSales.getSelectionModel().getSelectedItem();
+
+        if (selectedSale == null){
+            AlertUtils.showWarning("Aviso", "Selecione uma venda para modificar!");
+            return;
+        }
+
+        int saleId = selectedSale.getSaleId();
+        SessionManager.getInstance().setSaleId(saleId);
+
+        Stage currentStage = (Stage) buttonManageSale.getScene().getWindow();
+        ScreenManager.changeScreen("/com/physicalmed/physicalmedmanagement/sale-update-view.fxml", "Modificar Venda", currentStage);
+    }
+
     public void handleDeleteSale(){
         Sale selectedSale = tableSales.getSelectionModel().getSelectedItem();
 

@@ -96,7 +96,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="buttonManageSale" layoutX="164.0" layoutY="11.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="123.0" style="-fx-background-radius: 6; -fx-background-color: #f9ff36;" text="Modificar">
+                  <Button fx:id="buttonManageSale" layoutX="164.0" layoutY="11.0" mnemonicParsing="false" onAction="#startSaleUpdate" prefHeight="40.0" prefWidth="123.0" style="-fx-background-radius: 6; -fx-background-color: #f9ff36;" text="Modificar">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>

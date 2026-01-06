@@ -6,6 +6,7 @@ public class SessionManager {
     private int productId;
     private Boolean paymentIsSingle;
     private String paymentName;
+    private int saleId;
 
     private SessionManager() {}
 
@@ -39,4 +40,8 @@ public class SessionManager {
     public void setPaymentName(String paymentName) {
         this.paymentName = paymentName;
     }
+
+    public int getSaleId() {return saleId; }
+
+    public void setSaleId(int saleId) {this.saleId = saleId; }
 }

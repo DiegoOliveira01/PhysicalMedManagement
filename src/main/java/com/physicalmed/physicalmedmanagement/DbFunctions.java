@@ -473,6 +473,35 @@ public class DbFunctions {
         return null;
     }
 
+    public Sale getSaleById(int saleId){
+        String query = "SELECT * FROM sale WHERE sale_id = ?";
+
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, saleId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()){
+                Sale s = new Sale();
+                s.setSaleId(rs.getInt("sale_id"));
+                s.setSellerId(rs.getInt("seller_id"));
+                s.setProductId(rs.getInt("product_id"));
+                s.setStatus(rs.getString("status"));
+                s.setSaleDate(rs.getString("sale_date"));
+                s.setPaymentMethod(rs.getString("payment_method"));
+                s.setSubTotal(rs.getBigDecimal("subtotal"));
+                s.setTotal(rs.getBigDecimal("total"));
+
+                return s;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
     public List<Sale> getSalesByDateRange(String fromDate, String toDate){
         List<Sale> sales = new ArrayList<>();
 
