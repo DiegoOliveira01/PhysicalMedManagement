@@ -1,6 +1,7 @@
 package com.physicalmed.physicalmedmanagement;
 
 import com.physicalmed.physicalmedmanagement.utils.ButtonEffects;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -37,7 +38,7 @@ public class SaleUpdateController implements Initializable {
     @FXML
     private ChoiceBox<String> choiceBoxInstallments;
     @FXML
-    private ChoiceBox<ChoiceItem> choiceBoxStatus;
+    private ChoiceBox<String> choiceBoxStatus;
     @FXML
     private Label labelInstallments;
     @FXML
@@ -58,6 +59,8 @@ public class SaleUpdateController implements Initializable {
     private int currentProductId;
     private int currentSaleId;
     private int currentSellerId;
+    private String currentSaleStatus;
+    private byte[] currentImageByte;
     private DbFunctions dbFunctions = new DbFunctions();
     private final DecimalFormat moneyFormat = new DecimalFormat("R$ #,##0.00"); // Para formatção dos preços
 
@@ -65,10 +68,15 @@ public class SaleUpdateController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle){
         currentSaleId = SessionManager.getInstance().getSaleId();
         System.out.println("Sale Id recebido:" + currentSaleId);
+
+        choiceBoxStatus.getItems().addAll("PENDENTE", "APROVADA", "CANCELADA");
+
         loadSaleData(currentSaleId);
 
         applyNumericCommaMask(txtSubtotalSellPrice);
         applyNumericCommaMask(txtTotalSellPrice);
+        replaceNumeric(txtSubtotalSellPrice);
+        replaceNumeric(txtTotalSellPrice);
         applyEffects();
 
     }
@@ -85,6 +93,18 @@ public class SaleUpdateController implements Initializable {
             labelSellerName.setText(SellerName);
             labelPaymentMethod.setText(sale.getPaymentMethod());
             txtSubtotalSellPrice.setText(sale.getSubTotal().toString());
+            txtTotalSellPrice.setText(sale.getTotal().toString());
+            currentSaleStatus = sale.getStatus();
+
+            if (currentSaleStatus.equals("PENDENTE")){
+                choiceBoxStatus.setValue("PENDENTE");
+            }
+            if (currentSaleStatus.equals("APROVADA")){
+                choiceBoxStatus.setValue("APROVADA");
+            }
+            if (currentSaleStatus.equals("CANCELADA")){
+                choiceBoxStatus.setValue("CANCELADA");
+            }
         }
         else {
             System.out.println("Erro ao retornar venda");
@@ -97,6 +117,13 @@ public class SaleUpdateController implements Initializable {
             labelCredit.setText(moneyFormat.format(product.getCreditPrice()));
             labelCreditDiscount.setText(moneyFormat.format(product.getCreditPriceDiscount()));
             labelStock.setText(String.valueOf(product.getStock()));
+
+            if (product.getProductImage() != null){
+                currentImageByte = product.getProductImage(); // Armazena os bytes da imagem atual
+
+                Image img = new Image(new ByteArrayInputStream(product.getProductImage()));
+                imageViewProduct.setImage(img);
+            }
         }
         else {
             System.out.println("Erro ao retornar produto");
