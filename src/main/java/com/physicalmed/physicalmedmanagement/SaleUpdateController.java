@@ -13,6 +13,7 @@ import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class SaleUpdateController implements Initializable {
@@ -36,11 +37,11 @@ public class SaleUpdateController implements Initializable {
     @FXML
     private Label labelPaymentMethod;
     @FXML
+    private Label labelInstallment;
+    @FXML
     private ChoiceBox<String> choiceBoxInstallments;
     @FXML
     private ChoiceBox<String> choiceBoxStatus;
-    @FXML
-    private Label labelInstallments;
     @FXML
     private Label labelError;
     @FXML
@@ -63,6 +64,7 @@ public class SaleUpdateController implements Initializable {
     private byte[] currentImageByte;
     private DbFunctions dbFunctions = new DbFunctions();
     private final DecimalFormat moneyFormat = new DecimalFormat("R$ #,##0.00"); // Para formatção dos preços
+    private String saleDate;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
@@ -95,6 +97,8 @@ public class SaleUpdateController implements Initializable {
             txtSubtotalSellPrice.setText(sale.getSubTotal().toString());
             txtTotalSellPrice.setText(sale.getTotal().toString());
             currentSaleStatus = sale.getStatus();
+            datePickerSaleDate.setValue(LocalDate.parse(sale.getSaleDate()));
+            labelInstallment.setText(String.valueOf(sale.getInstallment()).concat("x"));
 
             if (currentSaleStatus.equals("PENDENTE")){
                 choiceBoxStatus.setValue("PENDENTE");
@@ -133,6 +137,32 @@ public class SaleUpdateController implements Initializable {
 
     @FXML
     private void handleUpdateSale(){
+        Sale sale = dbFunctions.getSaleById(currentSaleId);
+
+        String status = choiceBoxStatus.getValue();
+        var saleDate = datePickerSaleDate.getValue();
+        String totalText = txtTotalSellPrice.getText();
+        int saleId = sale.getSaleId();
+
+        if (status == null ||saleDate == null || totalText == null ){
+            System.out.println("Preencha todos os campos!");
+            return;
+        }
+
+        BigDecimal total = new BigDecimal(totalText.replace(".", "").replace(",", ".").trim());
+
+
+        System.out.println("Status" + status);
+        System.out.println("saleDate" + saleDate);
+        System.out.println("total" + total);
+
+        try {
+            System.out.println("Indo atualizar no DB");
+            dbFunctions.updateSale(saleId, status, saleDate.toString(), total);
+        } catch (RuntimeException e) {
+            System.out.println("Falha zé");
+            throw new RuntimeException(e);
+        }
 
     }
 

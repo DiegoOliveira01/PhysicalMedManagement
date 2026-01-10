@@ -233,7 +233,7 @@ public class SaleAddController implements Initializable {
         System.out.println("Valor: " + total);
 
         try {
-            dbFunctions.saveSale(sellerId, productId, status, saleDate.toString(), paymentMethod, subtotal, total);
+            dbFunctions.saveSale(sellerId, productId, status, saleDate.toString(), paymentMethod, subtotal, total, installment);
             System.out.println("Indo salvar o produto na DB");
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -12,6 +12,7 @@ public class Sale {
     private String paymentMethod;
     private BigDecimal subTotal;
     private BigDecimal total;
+    private int installment;
 
     private String productName;
     private String sellerName;
@@ -94,5 +95,13 @@ public class Sale {
 
     public void setSellerName(String sellerName) {
         this.sellerName = sellerName;
+    }
+
+    public int getInstallment() {
+        return installment;
+    }
+
+    public void setInstallment(int installment) {
+        this.installment = installment;
     }
 }

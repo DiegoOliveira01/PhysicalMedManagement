@@ -492,6 +492,7 @@ public class DbFunctions {
                 s.setPaymentMethod(rs.getString("payment_method"));
                 s.setSubTotal(rs.getBigDecimal("subtotal"));
                 s.setTotal(rs.getBigDecimal("total"));
+                s.setInstallment(rs.getInt("installment"));
 
                 return s;
             }
@@ -742,9 +743,9 @@ public class DbFunctions {
     }
 
     public void saveSale(int sellerId, int productId, String status, String saleDate,
-                         String paymentMethod, BigDecimal subtotal, BigDecimal total) {
-        String query = "INSERT INTO sale (seller_id, product_id, status, sale_date, payment_method, subtotal, total) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+                         String paymentMethod, BigDecimal subtotal, BigDecimal total, int installment) {
+        String query = "INSERT INTO sale (seller_id, product_id, status, sale_date, payment_method, subtotal, total, installment) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)){
@@ -756,6 +757,7 @@ public class DbFunctions {
             pstmt.setString(5, paymentMethod);
             pstmt.setBigDecimal(6, subtotal);
             pstmt.setBigDecimal(7, total);
+            pstmt.setInt(8, installment);
 
             pstmt.executeUpdate();
 
@@ -895,6 +897,32 @@ public class DbFunctions {
             e.printStackTrace();
         }
 
+    }
+
+    public void updateSale(int saleId, String status, String saleDate, BigDecimal total){
+
+        String query = "UPDATE sale SET status = ?, sale_date = ?, total = ? WHERE sale_id = ?";
+
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query)){
+
+            pstmt.setString(1, status);
+            pstmt.setString(2, saleDate);
+            pstmt.setBigDecimal(3, total);
+            pstmt.setInt(4, saleId);
+
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0){
+                System.out.println("Venda atualizada com sucesso!");
+            }
+            else {
+                System.out.println("Ocorreu um erro ao atualizar a venda");
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
