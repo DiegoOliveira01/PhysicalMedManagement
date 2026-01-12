@@ -1,7 +1,6 @@
 package com.physicalmed.physicalmedmanagement;
 
 import com.physicalmed.physicalmedmanagement.utils.ButtonEffects;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -158,7 +157,17 @@ public class SaleUpdateController implements Initializable {
 
         try {
             System.out.println("Indo atualizar no DB");
-            dbFunctions.updateSale(saleId, status, saleDate.toString(), total);
+            boolean successUpdate = dbFunctions.updateSale(saleId, status, saleDate.toString(), total);
+
+            if (successUpdate){
+                System.out.println("Salvo com sucesso no DB");
+
+                Stage currentStage = (Stage) buttonUpdateSale.getScene().getWindow();
+                ScreenManager.changeScreen("/com/physicalmed/physicalmedmanagement/admin-screen-view.fxml", "Tela Principal", currentStage);
+            }
+            else {
+                System.out.println("Erro ao salvar no DB");
+            }
         } catch (RuntimeException e) {
             System.out.println("Falha zé");
             throw new RuntimeException(e);

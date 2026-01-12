@@ -899,7 +899,7 @@ public class DbFunctions {
 
     }
 
-    public void updateSale(int saleId, String status, String saleDate, BigDecimal total){
+    public boolean updateSale(int saleId, String status, String saleDate, BigDecimal total){
 
         String query = "UPDATE sale SET status = ?, sale_date = ?, total = ? WHERE sale_id = ?";
 
@@ -914,9 +914,11 @@ public class DbFunctions {
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0){
                 System.out.println("Venda atualizada com sucesso!");
+                return true;
             }
             else {
                 System.out.println("Ocorreu um erro ao atualizar a venda");
+                return false;
             }
 
 

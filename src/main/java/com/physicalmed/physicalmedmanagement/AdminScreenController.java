@@ -118,8 +118,8 @@ public class AdminScreenController implements Initializable {
                     setText(item);
                     switch (item.toUpperCase()) {
                         case "PENDENTE": setTextFill(Color.rgb(255, 156, 0)); break;
-                        case "CONFIRMADO": setTextFill(Color.rgb(0, 128, 0)); break;
-                        case "CANCELADO": setTextFill(Color.rgb(255, 0, 0)); break;
+                        case "APROVADA": setTextFill(Color.rgb(0, 128, 0)); break;
+                        case "CANCELADA": setTextFill(Color.rgb(255, 0, 0)); break;
                         default: setTextFill(Color.BLACK); break;
                     }
                 }
