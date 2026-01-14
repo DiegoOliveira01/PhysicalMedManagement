@@ -166,6 +166,26 @@
                   <Font name="Segoe UI Bold" size="16.0" />
                </font>
             </Label>
+            <Label fx:id="labelTodaySales1" layoutX="264.0" layoutY="16.0" text="Vendas hoje" textFill="RED">
+               <font>
+                  <Font name="Segoe UI Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelMonthSales1" layoutX="264.0" layoutY="42.0" prefHeight="23.0" prefWidth="128.0" text="Vendas do mês" textFill="RED">
+               <font>
+                  <Font name="Segoe UI Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelTodaySales2" layoutX="408.0" layoutY="16.0" prefHeight="23.0" prefWidth="103.0" text="R$00,00" textFill="RED">
+               <font>
+                  <Font name="Segoe UI Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelMonthSales2" layoutX="408.0" layoutY="42.0" prefHeight="23.0" prefWidth="103.0" text="R$00,00" textFill="RED">
+               <font>
+                  <Font name="Segoe UI Bold" size="18.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>

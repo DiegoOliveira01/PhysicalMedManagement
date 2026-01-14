@@ -205,7 +205,6 @@ public class SaleUpdateController implements Initializable {
         }
 
         ButtonEffects.applyHoverEffect(datePickerSaleDate, 1.01, 1.01);
-        ButtonEffects.applyHoverEffect(txtSubtotalSellPrice, 1.01, 1.01);
         ButtonEffects.applyHoverEffect(txtTotalSellPrice, 1.01, 1.01);
     }
 

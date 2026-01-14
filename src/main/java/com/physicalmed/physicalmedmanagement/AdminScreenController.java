@@ -45,6 +45,14 @@ public class AdminScreenController implements Initializable {
     @FXML
     private Label labelUserName;
     @FXML
+    private Label labelTodaySales1;
+    @FXML
+    private Label labelTodaySales2;
+    @FXML
+    private Label labelMonthSales1;
+    @FXML
+    private Label labelMonthSales2;
+    @FXML
     private Button buttonAddSale;
     @FXML
     private Button buttonManageSale;
@@ -67,6 +75,7 @@ public class AdminScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb){
         initializing = true; // Começa a inicialização
+        System.out.println("--Iniciando Tela Admin Screen--");
 
         String UserName = UserSession.getInstance().getUsername();
         labelUserName.setText(UserName);
@@ -143,6 +152,8 @@ public class AdminScreenController implements Initializable {
         });
         loadSales();
 
+        loadSalesIndicators(); // Carrega valores de venda diaria e mensal
+
         applyEffects();
         datePickerFrom.setStyle("-fx-font-family: 'Segoe UI';" + "-fx-font-size: 14px;" + "-fx-text-fill: #333333;");
         datePickerTo.setStyle("-fx-font-family: 'Segoe UI';" + "-fx-font-size: 14px;" + "-fx-text-fill: #333333;");
@@ -203,6 +214,7 @@ public class AdminScreenController implements Initializable {
             db.deleteSale(selectedSale.getSaleId());
             AlertUtils.showInfo("Sucesso", "Venda excluída com sucesso!");
             loadSales();
+            loadSalesIndicators();
         }
     }
 
@@ -283,6 +295,33 @@ public class AdminScreenController implements Initializable {
         List<Sale> sales = db.getSalesByDateRange(fromDate, toDate);
         ObservableList<Sale> observableList = FXCollections.observableArrayList(sales);
         tableSales.setItems(observableList);
+    }
+
+    private void loadSalesIndicators() {
+        BigDecimal compareValue = BigDecimal.valueOf(0);
+
+        BigDecimal todayTotal = db.getTodaySalesTotal();
+        BigDecimal monthTotal = db.getMonthSalesTotal();
+
+        labelTodaySales2.setText(moneyFormat.format(todayTotal));
+        if (todayTotal.compareTo(compareValue) <= 0){
+            labelTodaySales1.setTextFill(Color.RED);
+            labelTodaySales2.setTextFill(Color.RED);
+        }
+        else {
+            labelTodaySales1.setTextFill(Color.GREEN);
+            labelTodaySales2.setTextFill(Color.GREEN);
+        }
+
+        labelMonthSales2.setText(moneyFormat.format(monthTotal));
+        if (monthTotal.compareTo(compareValue) <= 0){
+            labelMonthSales1.setTextFill(Color.RED);
+            labelMonthSales2.setTextFill(Color.RED);
+        }
+        else {
+            labelMonthSales1.setTextFill(Color.GREEN);
+            labelMonthSales2.setTextFill(Color.GREEN);
+        }
     }
 
     public void loadSalesOfToday() {

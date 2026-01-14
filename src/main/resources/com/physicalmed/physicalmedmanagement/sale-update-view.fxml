@@ -368,6 +368,9 @@
                     <padding>
                         <Insets left="26.0" />
                     </padding>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
                 </TextField>
                 <Label alignment="CENTER" layoutX="285.0" layoutY="601.0" prefHeight="19.0" prefWidth="24.0" text="R$">
                     <font>

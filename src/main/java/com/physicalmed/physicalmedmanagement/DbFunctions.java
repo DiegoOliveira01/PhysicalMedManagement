@@ -392,6 +392,8 @@ public class DbFunctions {
     }
 
     public List<Sale> getAllSales(){
+        System.out.println("Iniciando getAllSales");
+
         List<Sale> sales = new ArrayList<>();
         String query = "SELECT sale_id, seller_id, product_id, status, sale_date, " +
                 "payment_method, subtotal, total FROM sale";
@@ -406,7 +408,6 @@ public class DbFunctions {
                 s.setSaleId(rs.getInt("sale_id"));
                 s.setSellerId(rs.getInt("seller_id"));
                 s.setProductId(rs.getInt("product_id"));
-                System.out.println(s.getProductId());
                 int saleProductId = s.getProductId();
                 int saleSellerId = s.getSellerId();
                 s.setProductName(getProductNameById(saleProductId));
@@ -417,6 +418,7 @@ public class DbFunctions {
                 s.setSubTotal(rs.getBigDecimal("subtotal"));
                 s.setTotal(rs.getBigDecimal("total"));
 
+                System.out.println("Adiciona novo registro: " + s.getSaleId());
                 sales.add(s);
             }
 
@@ -614,6 +616,47 @@ public class DbFunctions {
             e.printStackTrace();
         }
         return sales;
+    }
+
+    public BigDecimal getTodaySalesTotal(){
+        String query = "SELECT COALESCE(SUM(total), 0) AS total_day " +
+                "FROM sale WHERE sale_date::date = CURRENT_DATE";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            if (rs.next()) {
+                return rs.getBigDecimal("total_day");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return BigDecimal.ZERO;
+    }
+
+    public BigDecimal getMonthSalesTotal() {
+        String query =
+                "SELECT COALESCE(SUM(total), 0) AS total_month " +
+                        "FROM sale " +
+                        "WHERE EXTRACT(MONTH FROM sale_date::date) = EXTRACT(MONTH FROM CURRENT_DATE) " +
+                        "AND EXTRACT(YEAR FROM sale_date::date) = EXTRACT(YEAR FROM CURRENT_DATE)";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            if (rs.next()) {
+                return rs.getBigDecimal("total_month");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return BigDecimal.ZERO;
     }
 
     /**
