@@ -83,5 +83,8 @@ PhysicalMedManagement
 
 <p align="center">
   <img src="src/main/resources/com/physicalmed/physicalmedmanagement/screenshots/login.png" width="400" />
+</p>
+
+<p align="center">
   <img src="src/main/resources/com/physicalmed/physicalmedmanagement/screenshots/admin-dashboard.png" width="400" />
 </p>
