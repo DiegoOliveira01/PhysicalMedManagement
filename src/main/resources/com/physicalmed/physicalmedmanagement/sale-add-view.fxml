@@ -17,7 +17,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="742.0" maxWidth="980.0" prefHeight="742.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.physicalmed.physicalmedmanagement.SaleAddController">
+<AnchorPane maxHeight="742.0" maxWidth="980.0" prefHeight="742.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.physicalmed.physicalmedmanagement.controller.SaleAddController">
    <children>
       <ImageView fitHeight="742.0" fitWidth="980.0" pickOnBounds="true">
          <image>

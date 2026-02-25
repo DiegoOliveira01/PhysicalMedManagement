@@ -61,7 +61,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.physicalmed.physicalmedmanagement/com.physicalmed.physicalmedmanagement.Login
+                                com.physicalmed.physicalmedmanagement/com.physicalmed.physicalmedmanagement.view.Login
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
