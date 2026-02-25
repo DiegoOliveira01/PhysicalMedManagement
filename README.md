@@ -82,6 +82,6 @@ PhysicalMedManagement
 ## 🖼️ Screenshots do Sistema
 
 <p align="center">
-  <img src="screenshots/login.png" width="400" />
-  <img src="screenshots/admin-dashboard.png" width="400" />
+  <img src="src/main/resources/com/physicalmed/physicalmedmanagement/screenshots/login.png" width="400" />
+  <img src="src/main/resources/com/physicalmed/physicalmedmanagement/screenshots/admin-dashboard" width="400" />
 </p>
